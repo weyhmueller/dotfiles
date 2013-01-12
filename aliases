@@ -1,12 +1,28 @@
 # task config with dropbox
 alias task="task rc:/Users/oliver/Dropbox/tasks/.taskrc"
-#
+
+# Use `hub` as our git wrapper:
+#   http://defunkt.github.com/hub/
+hub_path=$(which hub)
+if (( $+commands[hub] ))
+then
+  alias git=$hub_path
+fi
+
 #ls aliase
 alias ll='ls -GFlh'
 alias la='ls -A'
 alias l='ls -lha'
 alias dir='ls -lht | less'
 alias ls='ls -GFh'
+
+if $(gls &>/dev/null)
+then
+  alias ls="gls -GFh --color"
+  alias l="gls -lha --color"
+  alias ll="gls -GFlh --color"
+  alias la='gls -A --color'
+fi
 
 # be faster aliase
 alias ..='cd ..'

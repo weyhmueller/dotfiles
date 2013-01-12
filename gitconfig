@@ -14,8 +14,6 @@
   trustExitCode = true
 [merge]
   tool = Kaleidoscope
-[alias]
- show-graph = log --graph --abbrev-commit --pretty=oneline
 
 # DO NOT EDIT BELOW THIS LINE
   default = tracking
@@ -31,6 +29,18 @@
   delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
   merge-branch = !git checkout master && git merge @{-1} --ff-only
   rebase-origin = !git fetch origin && git rebase origin/master
+  show-graph = log --graph --abbrev-commit --pretty=oneline
+  all = add -A
+  amend = commit --amend -C HEAD
+  credit = commit --amend --author "$1 <$2>" -C HEAD
+  delete-local-merged = branch -d `git branch --merged | grep -v '^*' | grep -v 'master'| tr -d '\n'`
+  promote = !~/.bin/git-promote
+  rank-contributers = !~/.bin/git-rank-contributers
+  undo = reset --soft HEAD^
+  wtf = !~/.bin/git-wtf
+  browse = !hub browse
+  w = !hub browse
+  compare = !hub compare
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input

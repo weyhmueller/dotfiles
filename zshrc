@@ -1,6 +1,12 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # DO NOT EDIT BELOW THIS LINE
 
+# GRC colorizes nifty unix tools all over the place
+if $(grc &>/dev/null) && $(brew &>/dev/null)
+then
+  source `brew --prefix`/etc/grc.bashrc
+fi
+
 export VISUAL=vim
 export PAGER=less
 export LESS='--ignore-case --LONG-PROMPT --raw-control-chars'
