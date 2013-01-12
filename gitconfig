@@ -34,10 +34,10 @@
   amend = commit --amend -C HEAD
   credit = commit --amend --author "$1 <$2>" -C HEAD
   delete-local-merged = branch -d `git branch --merged | grep -v '^*' | grep -v 'master'| tr -d '\n'`
-  promote = !~/.bin/git-promote
-  rank-contributers = !~/.bin/git-rank-contributers
+  promote = !~/bin/git-promote
+  rank-contributers = !~/bin/git-rank-contributers
   undo = reset --soft HEAD^
-  wtf = !~/.bin/git-wtf
+  wtf = !~/bin/git-wtf
   browse = !hub browse
   w = !hub browse
   compare = !hub compare
