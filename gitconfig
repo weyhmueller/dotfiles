@@ -1,4 +1,15 @@
-[push]
+[user]
+  name = Oliver Weyhmueller
+  email = oliver@weyhmueller.de
+[mergetool]
+  keepBackup = true
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+  trustExitCode = true
+
+# DO NOT EDIT BELOW THIS LINE
   default = tracking
 [color]
   branch = auto

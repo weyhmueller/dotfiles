@@ -1,3 +1,9 @@
+
+TERM=screen-256color
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# DO NOT EDIT BELOW THIS LINE
+
 # adds the current branch name in green
 git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null)
