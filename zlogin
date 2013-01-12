@@ -2,7 +2,7 @@
 
 
 # DO NOT EDIT BELOW THIS LINE
-export PATH="~/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 # adds the current branch name in green
 function git_prompt_info() {
