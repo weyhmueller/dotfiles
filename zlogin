@@ -1,5 +1,5 @@
 
-TERM=screen-256color
+TERM=xterm-256color
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # DO NOT EDIT BELOW THIS LINE
