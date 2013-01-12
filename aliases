@@ -1,10 +1,26 @@
+# task config with dropbox
+alias task="task rc:/Users/oliver/Dropbox/tasks/.taskrc"
+#
+#ls aliase
+alias ll='ls -GFlh'
+alias la='ls -A'
+alias l='ls -lha'
+alias dir='ls -lht | less'
+alias ls='ls -GFh'
+
+# be faster aliase
+alias ..='cd ..'
+alias cd..='cd ..'
+alias ...='cd ../..'
+alias cd...='cd ../..'
+alias cls='clear'
+alias h='history'
+alias df='df -h'
+
 # Unix
 alias tlf="tail -f"
 alias ln='ln -v'
 alias mkdir='mkdir -p'
-alias ...='../..'
-alias l='ls'
-alias ll='ls -al'
 alias lh='ls -Alh'
 alias -g G='| grep'
 alias -g M='| less'

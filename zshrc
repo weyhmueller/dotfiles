@@ -1,22 +1,6 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # DO NOT EDIT BELOW THIS LINE
 
-#ls aliase
-alias ll='ls -GFlh'
-alias la='ls -A'
-alias l='ls -lha'
-alias dir='ls -lht | less'
-alias ls='ls -GFh'
-
-# be faster aliase
-alias ..='cd ..'
-alias cd..='cd ..'
-alias ...='cd ../..'
-alias cd...='cd ../..'
-alias cls='clear'
-alias h='history'
-alias df='df -h'
-
 export VISUAL=vim
 export PAGER=less
 export LESS='--ignore-case --LONG-PROMPT --raw-control-chars'
