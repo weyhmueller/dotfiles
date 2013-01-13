@@ -30,7 +30,7 @@ for name in *; do
       else
         ln -s "$PWD/$name" "$target"
       fi
-    elif [ "$name" == 'bin' ]; then
+    elif [ "$name" = 'bin' ]; then
       echo "Populating ~/bin"
       mkdir -p $HOME/bin
       cp -a $PWD/$name/* $HOME/bin/
