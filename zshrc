@@ -56,10 +56,6 @@ function extract {
 # load our own completion functions
 fpath=(~/.zsh/completion $fpath)
 
-# completion
-autoload -U compinit
-compinit
-
 # automatically enter directories without cd
 setopt auto_cd
 
