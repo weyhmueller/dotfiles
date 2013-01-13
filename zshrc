@@ -4,7 +4,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # Path to oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 plugins=(git textmate ruby)
 
 # GRC colorizes nifty unix tools all over the place
