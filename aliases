@@ -16,14 +16,23 @@ alias ll='ls -GFlh'
 alias la='ls -GA'
 alias dir='ls -Glht | less'
 
-if $(gls &>/dev/null || ls --help &>/dev/null)
+if $(gls &>/dev/null)
 then
   alias ls="gls -Fh --color"
   alias l="gls -lha --color"
   alias ll="gls -Flh --color"
   alias la='gls -A --color'
+  alias dir='gls -lht --color | less'
+fi
+if $(ls --help &>/dev/null)
+then
+  alias ls="ls -Fh --color"
+  alias l="ls -lha --color"
+  alias ll="ls -Flh --color"
+  alias la='ls -A --color'
   alias dir='ls -lht --color | less'
 fi
+
 
 # be faster aliase
 alias ..='cd ..'
