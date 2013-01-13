@@ -10,18 +10,19 @@ then
 fi
 
 #ls aliase
-alias ll='ls -GFlh'
-alias la='ls -A'
-alias l='ls -lha'
-alias dir='ls -lht | less'
 alias ls='ls -GFh'
+alias l='ls -Glha'
+alias ll='ls -GFlh'
+alias la='ls -GA'
+alias dir='ls -Glht | less'
 
-if $(gls &>/dev/null)
+if $(gls &>/dev/null || ls --help &>/dev/null)
 then
-  alias ls="gls -GFh --color"
+  alias ls="gls -Fh --color"
   alias l="gls -lha --color"
-  alias ll="gls -GFlh --color"
+  alias ll="gls -Flh --color"
   alias la='gls -A --color'
+  alias dir='ls -lht --color | less'
 fi
 
 # be faster aliase
