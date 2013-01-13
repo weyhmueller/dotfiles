@@ -9,13 +9,14 @@ then
   alias git=$hub_path
 fi
 
-#ls aliase
+#ls aliase for mac ls
 alias ls='ls -GFh'
 alias l='ls -Glha'
 alias ll='ls -GFlh'
 alias la='ls -GA'
 alias dir='ls -Glht | less'
 
+# check if  gnu ls is also available
 if $(gls &>/dev/null)
 then
   alias ls="gls -Fh --color"
@@ -24,7 +25,11 @@ then
   alias la='gls -A --color'
   alias dir='gls -lht --color | less'
 fi
-if $(ls --help &>/dev/null)
+
+# use gnu ls if it is just called ls
+\ls --help &>/dev/null
+
+if [ $? -eq 0 ]
 then
   alias ls="ls -Fh --color"
   alias l="ls -lha --color"
@@ -32,7 +37,6 @@ then
   alias la='ls -A --color'
   alias dir='ls -lht --color | less'
 fi
-
 
 # be faster aliase
 alias ..='cd ..'
