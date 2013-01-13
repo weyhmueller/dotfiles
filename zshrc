@@ -1,6 +1,12 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # DO NOT EDIT BELOW THIS LINE
 
+
+# Path to oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="robbyrussell"
+plugins=(git textmate ruby)
+
 # GRC colorizes nifty unix tools all over the place
 if $(grc &>/dev/null) && $(brew &>/dev/null)
 then
@@ -110,3 +116,5 @@ setopt CORRECT CORRECT_ALL
 
 # Enable extended globbing
 setopt EXTENDED_GLOB
+
+source $ZSH/oh-my-zsh.sh

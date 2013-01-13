@@ -1,6 +1,7 @@
 # Tools to be installed
 
-## General
+## General (on Mac via brew)
+* zsh http://www.zsh.org
 * taskwarrior http://taskwarrior.org/projects/taskwarrior
 * watch http://procps.sourceforge.net
 * ack http://betterthangrep.com
