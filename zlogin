@@ -4,42 +4,6 @@
 # DO NOT EDIT BELOW THIS LINE
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
-# adds the current branch name in green
-#function git_prompt_info() {
-#  local ref=$(git symbolic-ref HEAD 2> /dev/null)
-#  local gitst="$(git status 2> /dev/null)"
-#  local gitrepuser="$(git config --local user.email)"
-#  local gitglobuser="$(git config --global user.email)"
-#  local gituser="${GIT_AUTHOR_EMAIL:-${gitrepuser:-${gitglobuser}}}"
-#  if [[ ${gituser} == 'oliver@weyhmueller.de' || ${gituser} == '' ]]; then
-#    gituser="[%{$fg[green]%}oli%{$reset_color%}] "
-#  elif [[ ${gituser} == 'oliver.weyhmueller@t-systems.com' ]]; then
-#    gituser="[%{$fg[magenta]%}tsi%{$reset_color%}] "
-#  else
-#    gituser="[%{$fg[red]%}???%{$reset_color%}] "
-#  fi
-
-#  if [[ -f .git/MERGE_HEAD ]]; then
-#    if [[ ${gitst} =~ "unmerged" ]]; then
-#      gitstatus="[%{$fg[red]%}unmerged%{$reset_color%}]"
-#    else
-#      gitstatus="[%{$fg[green]%}merged%{$reset_color%}]"
-#    fi
-#  elif [[ ${gitst} =~ "Changes to be committed" ]]; then
-#    gitstatus="[%{$fg[blue]%}!%{$reset_color%}]"
-#  elif [[ ${gitst} =~ "use \"git add" ]]; then
-#    gitstatus="[%{$fg[red]%}!%{$reset_color%}]"
-#  elif [[ -n `git checkout HEAD 2> /dev/null | grep ahead` ]]; then
-#    gitstatus="[%{$fg[yellow]%}*%{$reset_color%}]"
-#  else
-#    gitstatus="[%{$fg[green]%}o%{$reset_color%}]"
-#  fi
-
-#  if [[ -n $ref ]]; then
-#    echo "[%{$fg_bold[green]%}${ref#refs/heads/}%{$reset_color%}]$gitstatus$gituser"
-#  fi
-#}
-#
 function precmd {
   # vcs_info
  # Put the string "hostname::/full/directory/path" in the title bar:
