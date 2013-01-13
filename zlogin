@@ -1,8 +1,8 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 
-# DO NOT EDIT BELOW THIS LINE
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+# DO NOT EDIT BELOW THIS LINE
 
 function precmd {
   # vcs_info

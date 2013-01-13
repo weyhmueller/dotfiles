@@ -1,11 +1,12 @@
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+DEFAULT_USER=oliver
+
 # DO NOT EDIT BELOW THIS LINE
 
 
 # Path to oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="weyhmueller"
-DEFAULT_USER=oliver
 
 plugins=(git textmate ruby)
 
