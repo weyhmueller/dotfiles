@@ -23,13 +23,17 @@ for name in *; do
       fi
     fi
   else
-    if [ "$name" != 'install.sh' ]; then
+    if [ "$name" != 'install.sh' ] && [ "$name" != 'bin' ]; then
       echo "Creating $target"
       if [ -n "$(grep "$cutstring" "$name")" ]; then
         cp "$PWD/$name" "$target"
       else
         ln -s "$PWD/$name" "$target"
       fi
+    elif [ "$name" == 'bin' ]; then
+      echo "Populating ~/bin"
+      mkdir -p $HOME/bin
+      cp -a $PWD/$name/* $HOME/bin/
     fi
   fi
 done
