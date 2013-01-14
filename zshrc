@@ -20,7 +20,7 @@ export VISUAL=vim
 export PAGER=less
 export LESS='--ignore-case --LONG-PROMPT --raw-control-chars'
 # Setup terminal, and turn on colors
-export TERM=xterm-256color
+[ -z "$TMUX" ] && export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Gxfxcxdxbxegedabagacad
 

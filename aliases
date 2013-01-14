@@ -9,6 +9,12 @@ then
   alias git=$hub_path
 fi
 
+ack_path=$(which ack-grep)
+if (( $+commands[ack-grep] ))
+then
+  alias ack=$ack_path
+fi
+
 #ls aliase for mac ls
 alias ls='ls -GFh'
 alias l='ls -Glha'
