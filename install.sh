@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 
-function vundle-init () {
+function vundle-init() {
   if [ ! -d ~/.vim/bundle/vundle/ ]
   then
     mkdir -p ~/.vim/bundle/vundle/
@@ -14,13 +14,13 @@ function vundle-init () {
   fi
 }
 
-function vundle () {
+function vundle() {
   vundle-init
   vim -c "execute \"BundleInstall\" | q | q"
 }
 
 
-function vundle-update () {
+function vundle-update() {
   vundle-init
   vim -c "execute \"BundleInstall!\" | q | q"
 }
@@ -63,4 +63,4 @@ for name in *; do
   fi
 done
 
-vundle-update
+vundle
