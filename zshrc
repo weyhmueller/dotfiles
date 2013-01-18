@@ -8,7 +8,7 @@ DEFAULT_USER=oliver
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="weyhmueller"
 
-plugins=(git textmate ruby)
+plugins=(git textmate ruby brew capistrano coffee command-not-found compleat cp debian dircycle encode64 extract fasd forklift gem gnu-utils history knife lol npm nyan redis-cli rsync rvm svn task urltools vundle)
 
 # GRC colorizes nifty unix tools all over the place
 if $(grc &>/dev/null) && $(brew &>/dev/null)
