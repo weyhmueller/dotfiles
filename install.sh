@@ -27,6 +27,8 @@ function vundle-update() {
 
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
+rm -rf $HOME/.vim
+
 for name in *; do
   target="$HOME/.$name"
   if [ -e "$target" ]; then
@@ -64,3 +66,5 @@ for name in *; do
 done
 
 vundle
+
+chsh -s `which zsh`
