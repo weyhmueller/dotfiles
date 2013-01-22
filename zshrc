@@ -8,6 +8,7 @@ DEFAULT_USER=oliver
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="weyhmueller"
 
+zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent id_rsa id_dsa
 
 plugins=(git textmate ssh-agent ruby brew capistrano coffee command-not-found compleat cp debian dircycle encode64 extract fasd forklift gem gnu-utils history knife lol npm nyan redis-cli rsync rvm svn task urltools vundle git-extras)
