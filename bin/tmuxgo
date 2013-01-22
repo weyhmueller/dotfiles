@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 #
-
+source $HOME/.zshrc
 SESSION=$USER
 # if the session is already running, just attach to it.
 tmux has-session -t $SESSION
