@@ -4,41 +4,11 @@
 export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 # DO NOT EDIT BELOW THIS LINE
 
-function precmd {
-  # vcs_info
- # Put the string "hostname::/full/directory/path" in the title bar:
-  echo -ne "\e]2;$PWD\a"
-
-  # Put the parentdir/currentdir in the tab
-  echo -ne "\e]1;$PWD:h:t/$PWD:t\a"
-}
-
-function set_running_app {
-  printf "\e]1; $PWD:t:$(history $HISTCMD | cut -b7- ) \a"
-}
-
-function preexec {
-  set_running_app
-}
-
-function postexec {
-  set_running_app
-}
-
 # makes color constants available
 autoload -U colors
 colors
 
-# enable colored output from ls, etc
-export CLICOLOR=1
-
-# expand functions in the prompt
-setopt prompt_subst
-
 # ===== Basics
-
-# If you type foo, and it isn't a command, and it is a directory in your cdpath, go there
-setopt AUTO_CD
 
 # Allow comments even in interactive shells (especially for Muness)
 setopt INTERACTIVE_COMMENTS
