@@ -99,7 +99,8 @@ export dirstacksize=5
 setopt AUTOCD
 setopt AUTOPUSHD PUSHDMINUS PUSHDSILENT PUSHDTOHOME
 setopt cdablevars
-
+setopt share_history
+setopt hist_ignore_space
 # Try to correct command line spelling
 setopt CORRECT CORRECT_ALL
 
