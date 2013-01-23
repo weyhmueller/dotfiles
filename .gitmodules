@@ -1,6 +1,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
-	url = git://github.com/weyhmueller/oh-my-zsh.git
+	url = ssh://git@github.com/weyhmueller/oh-my-zsh.git
 [submodule "vim/bundle/ctags.vim"]
 	path = vim/bundle/ctags.vim
 	url = http://github.com/vim-scripts/ctags.vim.git
