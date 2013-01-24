@@ -21,6 +21,9 @@ endif
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+let g:vundle_default_git_proto = 'http'
+let g:netrw_home=$HOME
+
 " Let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 

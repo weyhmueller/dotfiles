@@ -67,4 +67,6 @@ done
 
 vundle
 
-chsh -s `which zsh`
+if [ ${SHELL:${#SHELL}-3:3} != "zsh" ]; then
+  chsh -s `which zsh`
+fi
