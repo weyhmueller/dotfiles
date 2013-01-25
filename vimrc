@@ -43,6 +43,7 @@ Bundle 'tsaleh/vim-matchit'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/greplace.vim'
 Bundle 'vim-scripts/tComment'
+Bundle 'vim-scripts/taglist.vim'
 Bundle 'xenoterracide/html.vim'
 Bundle 'altercation/vim-colors-solarized'
 
