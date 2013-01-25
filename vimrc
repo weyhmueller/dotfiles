@@ -46,6 +46,8 @@ Bundle 'vim-scripts/tComment'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'xenoterracide/html.vim'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/syntastic'
+Bundle 'rstacruz/sparkup'
 
 filetype plugin indent on
 
