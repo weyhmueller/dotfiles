@@ -15,7 +15,7 @@
 	url = http://github.com/vim-scripts/tComment.git
 [submodule "vim/bundle/textile.vim"]
 	path = vim/bundle/textile.vim
-	url = http://github.com/timcharper/textile.git
+	url = http://github.com/timcharper/textile.vim.git
 [submodule "vim/bundle/treetop.vim"]
 	path = vim/bundle/treetop.vim
 	url = http://github.com/nanki/treetop.vim.git
