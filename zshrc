@@ -3,14 +3,6 @@ DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
 
-
-# Path to oh-my-zsh
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="weyhmueller"
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent id_rsa id_dsa
-
 plugins=(git textmate ssh-agent ruby brew capistrano coffee command-not-found compleat cp debian dircycle encode64 extract fasd forklift gem gnu-utils history knife lol npm nyan redis-cli rsync rvm svn task urltools vundle git-extras)
 
 # GRC colorizes nifty unix tools all over the place
@@ -30,9 +22,6 @@ export LSCOLORS=Gxfxcxdxbxegedabagacad
 # Enable color in grep
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='3;33'
-
-export SAVEHIST=3000
-export HISTFILE=~/.zsh_history
 
 function extract {
   echo Extracting $1 ...
@@ -86,24 +75,7 @@ bindkey "^Y" accept-and-hold
 bindkey "^N" insert-last-word
 bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 
-# keep TONS of history
-export HISTSIZE=4096
-
 # look for ey config in project dirs
 export EYRC=./.eyrc
 
-# automatically pushd
-export dirstacksize=5
-
-# awesome cd movements from zshkit
-setopt AUTOCD
-setopt AUTOPUSHD PUSHDMINUS PUSHDSILENT PUSHDTOHOME
-setopt cdablevars
-
-# Try to correct command line spelling
-setopt CORRECT CORRECT_ALL
-
-# Enable extended globbing
-setopt EXTENDED_GLOB
-
-source $ZSH/oh-my-zsh.sh
+source $HOME/.zprezto/runcoms/zshrc
