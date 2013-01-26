@@ -15,7 +15,7 @@
 	url = http://github.com/vim-scripts/tComment.git
 [submodule "vim/bundle/textile.vim"]
 	path = vim/bundle/textile.vim
-	url = http://github.com/timcharper/textile.git
+	url = http://github.com/timcharper/textile.vim.git
 [submodule "vim/bundle/treetop.vim"]
 	path = vim/bundle/treetop.vim
 	url = http://github.com/nanki/treetop.vim.git
@@ -52,3 +52,15 @@
 [submodule "vim/bundle/vundle"]
 	path = vim/bundle/vundle
 	url = http://github.com/gmarik/vundle
+[submodule "vim/bundle/vim-speeddating"]
+	path = vim/bundle/vim-speeddating
+	url = http://github.com/tpope/vim-speeddating
+[submodule "vim/bundle/taglist.vim"]
+	path = vim/bundle/taglist.vim
+	url = http://github.com/vim-scripts/taglist.vim
+[submodule "vim/bundle/sparkup"]
+	path = vim/bundle/sparkup
+	url = http://github.com/stacruz/sparkup.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = http://github.com/scrooloose/syntastic.git

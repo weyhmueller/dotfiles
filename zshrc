@@ -2,7 +2,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
-
+PATH=$HOME/bin:$PATH
 
 # Path to oh-my-zsh
 ZSH=$HOME/.oh-my-zsh
@@ -99,7 +99,8 @@ export dirstacksize=5
 setopt AUTOCD
 setopt AUTOPUSHD PUSHDMINUS PUSHDSILENT PUSHDTOHOME
 setopt cdablevars
-
+setopt share_history
+setopt hist_ignore_space
 # Try to correct command line spelling
 setopt CORRECT CORRECT_ALL
 
