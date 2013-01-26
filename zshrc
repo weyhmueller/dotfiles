@@ -1,17 +1,7 @@
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$HOME/bin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
-PATH=$HOME/bin:$PATH
-
-# Path to oh-my-zsh
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="weyhmueller"
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent id_rsa id_dsa
-
-plugins=(git textmate ssh-agent ruby brew capistrano coffee command-not-found compleat cp debian dircycle encode64 extract fasd forklift gem gnu-utils history knife lol npm nyan redis-cli rsync rvm svn task urltools vundle git-extras)
 
 # GRC colorizes nifty unix tools all over the place
 if $(grc &>/dev/null) && $(brew &>/dev/null)
@@ -30,32 +20,6 @@ export LSCOLORS=Gxfxcxdxbxegedabagacad
 # Enable color in grep
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='3;33'
-
-export SAVEHIST=3000
-export HISTFILE=~/.zsh_history
-
-function extract {
-  echo Extracting $1 ...
-  if [ -f $1 ] ; then
-      case $1 in
-          *.tar.bz2)   tar xjf $1  ;;
-          *.tar.gz)    tar xzf $1  ;;
-          *.bz2)       bunzip2 $1  ;;
-          *.rar)       unrar x $1    ;;
-          *.gz)        gunzip $1   ;;
-          *.tar)       tar xf $1   ;;
-          *.tbz2)      tar xjf $1  ;;
-          *.tgz)       tar xzf $1  ;;
-          *.zip)       unzip $1   ;;
-          *.Z)         uncompress $1  ;;
-          *.7z)        7z x $1  ;;
-          *)        echo "'$1' cannot be extracted via extract()" ;;
-      esac
-  else
-      echo "'$1' is not a valid file"
-  fi
-}
-
 
 # load our own completion functions
 fpath=(~/.zsh/completion $fpath)
@@ -86,25 +50,7 @@ bindkey "^Y" accept-and-hold
 bindkey "^N" insert-last-word
 bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 
-# keep TONS of history
-export HISTSIZE=4096
-
 # look for ey config in project dirs
 export EYRC=./.eyrc
 
-# automatically pushd
-export dirstacksize=5
-
-# awesome cd movements from zshkit
-setopt AUTOCD
-setopt AUTOPUSHD PUSHDMINUS PUSHDSILENT PUSHDTOHOME
-setopt cdablevars
-setopt share_history
-setopt hist_ignore_space
-# Try to correct command line spelling
-setopt CORRECT CORRECT_ALL
-
-# Enable extended globbing
-setopt EXTENDED_GLOB
-
-source $ZSH/oh-my-zsh.sh
+source $HOME/.zprezto/runcoms/zshrc
