@@ -22,22 +22,19 @@ Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-ne
 
 Host hades.weyhmueller.net hades
     User ec2-user
-    IdentityFile ~/.ssh/id_rsa
-    ForwardAgent yes
 
 Host idevice.webauth.de
     User bitnami
-    IdentityFile ~/.ssh/id_rsa
-    ForwardAgent yes
 
 Host *.weyhmueller.net nemesis ares demeter persephone hermes artemis poseidon apollon hestia eileithyia hebe
     User root
-    IdentityFile ~/.ssh/id_dsa
-    ForwardAgent yes
+
+Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
+    User root
+
 
 Host *.secport.t-com.de manager-svc
     User secow
-    ForwardAgent yes
 
 Host *
 ForwardAgent yes
