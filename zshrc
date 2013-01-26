@@ -3,8 +3,6 @@ DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
 
-plugins=(git textmate ssh-agent ruby brew capistrano coffee command-not-found compleat cp debian dircycle encode64 extract fasd forklift gem gnu-utils history knife lol npm nyan redis-cli rsync rvm svn task urltools vundle git-extras)
-
 # GRC colorizes nifty unix tools all over the place
 if $(grc &>/dev/null) && $(brew &>/dev/null)
 then
