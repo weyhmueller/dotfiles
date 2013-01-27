@@ -63,7 +63,7 @@
 	url = http://github.com/vim-scripts/taglist.vim
 [submodule "vim/bundle/sparkup"]
 	path = vim/bundle/sparkup
-	url = http://github.com/stacruz/sparkup.git
+	url = http://github.com/rstacruz/sparkup.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = http://github.com/scrooloose/syntastic.git
