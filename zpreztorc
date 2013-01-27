@@ -114,8 +114,8 @@ zstyle ':prezto:module:ssh-agent' identities 'id_rsa' 'id_dsa'
    'main' \
    'brackets' \
    'pattern' \
-   'cursor' \
-   'root'
+   'cursor'
+#   'root'
 
 #
 # Terminal
