@@ -15,34 +15,19 @@ then
   alias ack=$ack_path
 fi
 
-#ls aliase for mac ls
-alias ls='ls -GFh'
-alias l='ls -Glha'
-alias ll='ls -GFlh'
-alias la='ls -GA'
-alias dir='ls -Glht | less'
-
-# check if  gnu ls is also available
+LSCMD="ls -G"
 if $(gls &>/dev/null)
 then
-  alias ls="gls -Fh --color"
-  alias l="gls -lha --color"
-  alias ll="gls -Flh --color"
-  alias la='gls -A --color'
-  alias dir='gls -lht --color | less'
+  LSCMD="gls --color"
 fi
-
-# use gnu ls if it is just called ls
 \ls --help &>/dev/null
 
 if [ $? -eq 0 ]
 then
-  alias ls="ls -Fh --color"
-  alias l="ls -lha --color"
-  alias ll="ls -Flh --color"
-  alias la='ls -A --color'
-  alias dir='ls -lht --color | less'
+  LSCMD="ls --color"
 fi
+alias ls="$LSCMD -Fh"
+alias dir="$LSCMD -lht | less"
 
 # be faster aliase
 alias ..='cd ..'
@@ -61,38 +46,13 @@ alias lh='ls -Alh'
 alias -g G='| grep'
 alias -g M='| less'
 alias -g L='| wc -l'
+
 alias -g ONE="| awk '{ print \$1}'"
-
-# git
-alias g="git"
-alias gci="git pull --rebase && rake && git push"
-
-# Bundler
-alias b="bundle"
-
-# Tests and Specs
-alias t="ruby -I test"
-alias cuc="bundle exec cucumber"
-
-# Rubygems
-alias gi="gem install"
-alias giv="gem install -v"
-
-# Rails
-alias migrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
-
-# Heroku staging
-alias staging-console='heroku run console --remote staging'
-alias staging-process='watch heroku ps --remote staging'
-alias staging-releases='heroku releases --remote staging'
-alias staging-tail='heroku logs --tail --remote staging'
-
-# Heroku production
-alias production-console='heroku run console --remote production'
-alias production-process='watch heroku ps --remote production'
-alias production-releases='heroku releases --remote production'
-alias production-tail='heroku logs --tail --remote production'
-
-# Heroku databases
-alias db-backup-production='heroku pgbackups:capture --remote production'
-alias db-copy-production-to-staging='heroku pgbackups:restore DATABASE `heroku pgbackups:url --remote production` --remote staging  --confirm `basename $PWD`-staging'
+alias -g TWO="| awk '{ print \$2}'"
+alias -g THREE="| awk '{ print \$3}'"
+alias -g FOUR="| awk '{ print \$4}'"
+alias -g FIVE="| awk '{ print \$5}'"
+alias -g SIX="| awk '{ print \$6}'"
+alias -g SEVEN="| awk '{ print \$7}'"
+alias -g EIGHT="| awk '{ print \$8}'"
+alias -g NINE="| awk '{ print \$9}'"
