@@ -5,7 +5,7 @@ DEFAULT_USER=oliver
 
 # GRC colorizes nifty unix tools all over the place
 GRC=`which grc`
-NOT_FOUND_GRC = $?
+NOT_FOUND_GRC=$?
 if [ "$TERM" != dumb ] && [ $NOT_FOUND_GRC = 0 ]
 then
     alias colourify="$GRC -es --colour=auto"
