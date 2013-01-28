@@ -33,12 +33,14 @@ Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
     User root
 
 
-Host *.secport.t-com.de manager-svc
+Host manager-svc.secport.t-com.de manager-svc
     User secow
+    EscapeChar #
 
 Host *
 ForwardAgent yes
 #   ForwardX11 no
+#   ForwardX11Trusted yes
 #   RhostsRSAAuthentication no
 #   RSAAuthentication yes
 #   PasswordAuthentication yes
@@ -65,4 +67,7 @@ ForwardAgent yes
 #   TunnelDevice any:any
 #   PermitLocalCommand no
 #   VisualHostKey no
+#   ProxyCommand ssh -q -W %h:%p gateway.example.com
+    SendEnv LANG LC_*
 ServerAliveInterval 30
+ServerAliveCountMax 15
