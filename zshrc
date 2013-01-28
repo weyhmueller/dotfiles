@@ -5,7 +5,7 @@ DEFAULT_USER=oliver
 
 # GRC colorizes nifty unix tools all over the place
 GRC=`which grc`
-if [ "$TERM" != dumb ] && [ -n GRC ]
+if [ "$TERM" != dumb ] && [ $? = 0 ]
 then
     alias colourify="$GRC -es --colour=auto"
     alias configure='colourify ./configure'
