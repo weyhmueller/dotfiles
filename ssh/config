@@ -26,7 +26,7 @@ Host hades.weyhmueller.net hades
 Host idevice.webauth.de
     User bitnami
 
-Host *.weyhmueller.net nemesis ares demeter persephone hermes artemis poseidon apollon hestia eileithyia hebe
+Host *.weyhmueller.net nemesis ares demeter persephone hermes artemis poseidon apollon hestia eileithyia hebe pluton
     User root
 
 Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
