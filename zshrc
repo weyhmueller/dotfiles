@@ -23,6 +23,8 @@ then
     alias tail='colourify tail'
 fi
 
+
+
 export VISUAL=vim
 export PAGER=less
 export LESS='--ignore-case --LONG-PROMPT --raw-control-chars'
@@ -68,3 +70,26 @@ bindkey -s "^T" "^[Isudo ^[A" # "t" for "toughguy"
 export EYRC=./.eyrc
 
 source $HOME/.zprezto/runcoms/zshrc
+
+# ZSH_HIGHLIGHT_STYLES[default]=none
+ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red
+# ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[function]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+# ZSH_HIGHLIGHT_STYLES[precommand]=fg=green,underline
+# ZSH_HIGHLIGHT_STYLES[commandseparator]=none
+# ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=green
+ZSH_HIGHLIGHT_STYLES[path]='fg=white'
+# ZSH_HIGHLIGHT_STYLES[globbing]='fg=blue'
+# ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=blue
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
+# ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
+# ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=yellow
+# ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=cyan
+# ZSH_HIGHLIGHT_STYLES[assign]=none
+
