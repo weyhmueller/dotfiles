@@ -2,7 +2,7 @@ PATH=$HOME/bin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
-
+PATH=$HOME/.sysadmin-util:$PATH
 # GRC colorizes nifty unix tools all over the place
 GRC=`which grc`
 NOT_FOUND_GRC=$?
