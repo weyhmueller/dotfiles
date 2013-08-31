@@ -39,6 +39,7 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-bundler'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/greplace.vim'
@@ -48,6 +49,30 @@ Bundle 'xenoterracide/html.vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/syntastic'
 Bundle 'rstacruz/sparkup'
+Bundle 'crooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'juvenn/mustache.vim'
+Bundle 'nono/vim-handlebars'
+Bundle 'austintaylor/vim-indentobject'
+Bundle 'pangloss/vim-javascript'
+Bundle 'rmanalan/jshint.vim'
+Bundle 'vim-scripts/kwbdi.vim'
+Bundle 'tpope/vim-pastie'
+Bundle 'uarun/vim-protobuf'
+Bundle 'tpope/vim-ragtag'
+Bundle 'tpope/vim-repeat'
+Bundle 'mileszs/ack.vim'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'msanders/snipmate.vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'leafgarland/typescript-vim'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'slim-template/vim-slim'
+" Bundle 'christoomey/vim-tmux-navigator'
+
+
 
 filetype plugin indent on
 
@@ -123,6 +148,8 @@ autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=rou
 " :Cuc my text (no quotes) -> runs cucumber scenarios containing "my text"
 command! -nargs=+ Cuc :!ack --no-heading --no-break <q-args> | cut -d':' -f1,2 | xargs bundle exec cucumber --no-color
 
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
@@ -176,3 +203,29 @@ endfunction
 function! RunSpecs(command)
   execute ":w\|!clear && echo " . a:command . " && echo && " . a:command
 endfunction
+
+nmap <leader>d :NERDTreeToggle<CR>
+nmap <leader>f :NERDTreeFind<CR>
+nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>t :CtrlP<CR>
+nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR><CR>
+nmap <leader>] :TagbarToggle<CR>
+nmap <leader><space> :call whitespace#strip_trailing()<CR>
+nmap <leader>g :GitGutterToggle<CR>
+nmap <leader>c <Plug>Kwbd
+
+let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:NERDSpaceDelims=1
+let g:gitgutter_enabled = 1
+let g:gitgutter_highlight_lines = 1
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --column'
+
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
