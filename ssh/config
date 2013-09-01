@@ -17,7 +17,47 @@
 # list of available options, their meanings and defaults, please see the
 # ssh_config(5) man page.
 
-Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-netscreen-1.intranet.weyhmueller.net 
+Port 22
+
+# Defaults to allowing v1 which has known vulnerabilities
+Protocol 2
+
+# Almost always get a small win from compression,
+# but we don't want to expend too much CPU on it either.
+Compression yes
+CompressionLevel 4
+
+# Try and maintain a connection even if the server concerned
+# is hiding behind a stateful firewall :-(
+ServerAliveInterval 60
+ServerAliveCountMax 15
+
+ForwardAgent yes
+
+# Stops the operating system shipping an /etc/ssh/ssh_config
+# which enables hashing, thereby making me quite angry!
+HashKnownHosts no
+
+# By default we emphasize on strong encryption, and use compression for a speed boost.
+# An alias exists in ~/.bashrc for 'sshf' which tries to connect with a broader list of ciphers.
+Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+
+# Not using GSSAPI or Hostbased in any places...
+PreferredAuthentications publickey,keyboard-interactive,password
+
+# If a SSHFP entry exists in DNS, then we should trust it.
+# If it doesn't then add to known_hosts since in 99% of cases
+# we have no way to validate good vs. bad anyway!
+# Future attempts to connect will spot any changes to fingerprint.
+VerifyHostKeyDNS yes
+StrictHostKeyChecking no
+
+# More likely to notice changes in this than a hex fingerprint!
+VisualHostKey yes
+
+SendEnv LANG LC_*
+
+Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-netscreen-1.intranet.weyhmueller.net
     ServerAliveInterval 0
 
 Host hades.weyhmueller.net hades
@@ -36,38 +76,3 @@ Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
 Host manager-svc.secport.t-com.de manager-svc
     User secow
     EscapeChar #
-
-Host *
-ForwardAgent yes
-#   ForwardX11 no
-#   ForwardX11Trusted yes
-#   RhostsRSAAuthentication no
-#   RSAAuthentication yes
-#   PasswordAuthentication yes
-#   HostbasedAuthentication no
-#   GSSAPIAuthentication no
-#   GSSAPIDelegateCredentials no
-#   GSSAPIKeyExchange no
-#   GSSAPITrustDNS no
-#   BatchMode no
-#   CheckHostIP yes
-#   AddressFamily any
-#   ConnectTimeout 0
-#   StrictHostKeyChecking ask
-#   IdentityFile ~/.ssh/identity
-#   IdentityFile ~/.ssh/id_rsa
-#   IdentityFile ~/.ssh/id_dsa
-#   Port 22
-#   Protocol 2,1
-#   Cipher 3des
-#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,arcfour256,arcfour128,aes128-cbc,3des-cbc
-#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160
-#   EscapeChar ~
-#   Tunnel no
-#   TunnelDevice any:any
-#   PermitLocalCommand no
-#   VisualHostKey no
-#   ProxyCommand ssh -q -W %h:%p gateway.example.com
-    SendEnv LANG LC_*
-ServerAliveInterval 30
-ServerAliveCountMax 15
