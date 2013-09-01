@@ -2,14 +2,31 @@
 let mapleader = " "
 
 set nocompatible  " Use Vim settings, rather then Vi settings
-set nobackup
-set nowritebackup
-set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set backupcopy=yes
+set backspace=2
+set autoread
+set autoindent
+set clipboard=unnamed
+set directory-=.
+set encoding=utf-8
+set ignorecase
+set list
+set listchars=tab:▸\ ,trail:▫
 set history=50
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
+set smartcase
+set wildignore=log/**,node_submodules/**,target/**,tmp/**,*.rbc
+set wildmenu
+set hlsearch
+set notimeout
+set ttimeout
+
+
+set mouse=a
+set term=xterm-256color
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -92,7 +109,7 @@ augroup vimrcEx
 augroup END
 
 " Softtabs, 2 spaces
-set tabstop=2
+set tabstop=8
 set shiftwidth=2
 set expandtab
 
@@ -110,7 +127,8 @@ if executable("ack")
 endif
 
 " Color scheme
-colorscheme github
+set background=dark
+colorscheme solarized
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -216,8 +234,16 @@ nmap <leader>c <Plug>Kwbd
 
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
+highlight clear SignColumn
 let g:gitgutter_enabled = 1
-let g:gitgutter_highlight_lines = 1
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_realtime = 4000
+let g:gitgutter_sign_column_always = 1
+
+set t_ku=OA
+set t_kd=OB
+set t_kr=OC
+set t_kl=OD
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
