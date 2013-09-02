@@ -24,6 +24,10 @@
   status = auto
 [format]
   pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+[merge]
+  log = true
+[apply]
+  whitespace = fix
 [alias]
   ci = commit -v
   create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
@@ -42,6 +46,10 @@
   browse = !hub browse
   w = !hub browse
   compare = !hub compare
+  cia = !git add -A && git commit -av
+  s = status -s
+  p = !"git pull; git submodule foreach git pull origin master"
+  remotes = remote -v
   ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
   ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
   lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
@@ -87,3 +95,7 @@
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
+  attributesfile = ~/.gitattributes
+  # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
+  whitespace = space-before-tab,indent-with-non-tab,trailing-space
+
