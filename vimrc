@@ -23,6 +23,8 @@ set wildmenu
 set hlsearch
 set notimeout
 set ttimeout
+set ttimeoutlen=50
+set noshowmode
 
 
 set mouse=a
