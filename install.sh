@@ -32,7 +32,11 @@ rm -rf $HOME/.vim
 for name in *; do
   target="$HOME/.$name"
   if [ -e "$target" ]; then
-    if [ ! -L "$target" ]; then
+    if [ "$name" = 'bin' ]; then
+      echo "Populating ~/bin"
+      mkdir -p $HOME/bin
+      cp -a $PWD/$name/* $HOME/bin/
+    elif [ ! -L "$target" ]; then
       cutline=`grep -n -m1 "$cutstring" "$target" | sed "s/:.*//"`
       if [ -n "$cutline" ]; then
         cutline=$((cutline-1))
