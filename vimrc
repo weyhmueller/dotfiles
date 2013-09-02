@@ -87,6 +87,7 @@ Bundle 'leafgarland/typescript-vim'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
+Bundle 'bling/vim-airline'
 " Bundle 'christoomey/vim-tmux-navigator'
 
 
@@ -234,11 +235,20 @@ nmap <leader>c <Plug>Kwbd
 
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
-highlight clear SignColumn
+"highlight clear SignColumn
 let g:gitgutter_enabled = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime = 4000
 let g:gitgutter_sign_column_always = 1
+let g:airline_symbols = {}
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 
 set t_ku=OA
 set t_kd=OB
