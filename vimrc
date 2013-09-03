@@ -48,22 +48,22 @@ Bundle 'gmarik/vundle'
 
 " Define bundles via Github repos
 Bundle 'kchmck/vim-coffee-script'
-Bundle 'nanki/treetop.vim'
-Bundle 'timcharper/textile.vim'
+"Bundle 'nanki/treetop.vim'
+"Bundle 'timcharper/textile.vim'
 Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-haml'
+"Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-bundler'
 Bundle 'tsaleh/vim-matchit'
-Bundle 'vim-scripts/ctags.vim'
+"Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/greplace.vim'
-Bundle 'vim-scripts/tComment'
-Bundle 'vim-scripts/taglist.vim'
+"Bundle 'vim-scripts/tComment'
+"Bundle 'vim-scripts/taglist.vim'
 Bundle 'xenoterracide/html.vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/syntastic'
@@ -91,8 +91,6 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
 Bundle 'bling/vim-airline'
 " Bundle 'christoomey/vim-tmux-navigator'
-
-
 
 filetype plugin indent on
 
