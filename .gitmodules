@@ -69,7 +69,7 @@
 	url = http://github.com/scrooloose/syntastic.git
 [submodule "sysadmin-util"]
 	path = sysadmin-util
-	url = https://github.com/skx/sysadmin-util.git
+	url = git@github.com:weyhmueller/sysadmin-util.git
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
