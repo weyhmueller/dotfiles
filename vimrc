@@ -138,6 +138,10 @@ colorscheme solarized
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black
+
 " Numbers
 set number
 set numberwidth=5
@@ -228,6 +232,7 @@ function! RunSpecs(command)
   execute ":w\|!clear && echo " . a:command . " && echo && " . a:command
 endfunction
 
+nmap <leader>I :IndentGuidesToggle<CR><CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>b :CtrlPBuffer<CR>
