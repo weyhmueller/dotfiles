@@ -137,10 +137,11 @@ endif
 colorscheme solarized
 highlight NonText guibg=#060606
 highlight Folded  guibg=#0A0A0A guifg=#9090D0
+highlight SignColumn ctermbg=8
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=8
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
 
 " Numbers
 set number
@@ -239,13 +240,12 @@ nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>t :CtrlP<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR><CR>
 nmap <leader>] :TagbarToggle<CR>
-nmap <leader><space> :call whitespace#strip_trailing()<CR>
+nmap <leader><space> :call Strip_trailing()<CR>
 nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>c <Plug>Kwbd
 
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
-"highlight clear SignColumn
 let g:gitgutter_enabled = 1
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_realtime = 4000
@@ -259,6 +259,13 @@ let g:airline_right_alt_sep = '⮃'
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
+
+let g:solarized_termtrans = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_default_mapping = 0
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+
 
 set t_ku=OA
 set t_kd=OB
@@ -275,3 +282,18 @@ if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
+" thanks to http://vimcasts.org/e/4
+function! Strip_trailing()
+  let previous_search=@/
+  let previous_cursor_line=line('.')
+  let previous_cursor_column=col('.')
+  %s/\s\+$//e
+  let @/=previous_search
+  call cursor(previous_cursor_line, previous_cursor_column)
+endfunction
+
+" strip trailing whitespace on Ruby buffer saves
+augroup whitespace
+  autocmd BufWritePre *.rb call Strip_trailing()
+augroup END
