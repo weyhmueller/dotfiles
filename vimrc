@@ -110,7 +110,7 @@ augroup vimrcEx
 augroup END
 
 " Softtabs, 2 spaces
-set tabstop=8
+set tabstop=2
 set shiftwidth=2
 set expandtab
 
@@ -140,7 +140,7 @@ highlight Folded  guibg=#0A0A0A guifg=#9090D0
 highlight SignColumn ctermbg=8
 
 let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=8
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=10
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=0
 
 " Numbers
