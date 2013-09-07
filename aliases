@@ -29,6 +29,8 @@ fi
 alias ls="$LSCMD -Fh"
 alias dir="$LSCMD -lht | less"
 
+alias bd="bd -s"
+
 # be faster aliase
 alias ..='cd ..'
 alias cd..='cd ..'
