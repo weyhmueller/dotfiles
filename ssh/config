@@ -40,7 +40,7 @@ HashKnownHosts no
 
 # By default we emphasize on strong encryption, and use compression for a speed boost.
 # An alias exists in ~/.bashrc for 'sshf' which tries to connect with a broader list of ciphers.
-Ciphers aes256-ctr,aes192-ctr,aes128-ctr
+# Ciphers aes256-ctr,aes192-ctr,aes128-ctr
 
 # Not using GSSAPI or Hostbased in any places...
 PreferredAuthentications publickey,keyboard-interactive,password
