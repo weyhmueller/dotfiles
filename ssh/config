@@ -29,8 +29,8 @@ CompressionLevel 4
 
 # Try and maintain a connection even if the server concerned
 # is hiding behind a stateful firewall :-(
-ServerAliveInterval 60
-ServerAliveCountMax 15
+ServerAliveInterval 600
+ServerAliveCountMax 3
 
 ForwardAgent yes
 
@@ -57,22 +57,32 @@ VisualHostKey yes
 
 SendEnv LANG LC_*
 
-Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-netscreen-1.intranet.weyhmueller.net
+Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-netscreen-1.intranet.weyhmueller.net 192.168.2.253 192.168.1.253 192.168.69.3 192.168.69.222
     ServerAliveInterval 0
+    TCPKeepAlive no
+    HostKeyAlgorithms +ssh-dss
+    KexAlgorithms +diffie-hellman-group1-sha1
+    Ciphers +aes256-cbc
+    MACs +hmac-sha1
+    PasswordAuthentication yes
 
-Host hades.weyhmueller.net hades
+Host hades.weyhmueller.net hades lastte.st
     User ec2-user
-
+    ServerAliveInterval 10
+    TCPKeepalive yes
+    ServerAliveCountMax 5
 Host idevice.webauth.de
     User bitnami
 
 Host *.weyhmueller.net nemesis ares demeter persephone hermes artemis poseidon apollon hestia eileithyia hebe pluton
     User root
+    TCPKeepAlive no
+    ServerAliveInterval 30
 
 Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
     User root
 
-
-Host manager-svc.secport.t-com.de manager-svc
-    User secow
-    EscapeChar #
+Host *
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa

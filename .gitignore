@@ -1,4 +1,3 @@
 !bin
-ssh/id_dsa*
-ssh/id_rsa*
+ssh/id_*
 ssh/known_hosts
