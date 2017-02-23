@@ -83,6 +83,6 @@ Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
     User root
 
 Host *
-  UseKeychain yes
+  #UseKeychain yes
   AddKeysToAgent yes
   IdentityFile ~/.ssh/id_rsa
