@@ -89,7 +89,8 @@ Bundle 'leafgarland/typescript-vim'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
-Bundle 'bling/vim-airline'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
 " Bundle 'christoomey/vim-tmux-navigator'
 
 filetype plugin indent on
