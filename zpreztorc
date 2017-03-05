@@ -38,14 +38,23 @@ zstyle ':prezto:load' pmodule \
   'archive' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'ssh' \
+  'osx' \
   'prompt'
+
+#
+# Autosuggestions
+#
+
+# Set the query found color.
+# zstyle ':prezto:module:autosuggestions:color' found ''
 
 #
 # Editor
 #
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':prezto:module:editor' key-bindings 'emacs'
+zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'
@@ -55,7 +64,7 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-# zstyle ':prezto:module:git:status:ignore' submodules 'all'
+zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
@@ -94,6 +103,13 @@ zstyle ':prezto:module:editor' key-bindings 'emacs'
 zstyle ':prezto:module:prompt' theme 'weyhmueller'
 
 #
+# Ruby
+#
+
+# Auto switch the Ruby version on directory change.
+# zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
+
+#
 # Screen
 #
 
@@ -108,7 +124,7 @@ zstyle ':prezto:module:prompt' theme 'weyhmueller'
 #
 
 # Set the SSH identities to load into the agent.
-zstyle ':prezto:module:ssh:load' identities 'id_dsa' 'id_rsa'
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_ecdsa' 'id_ed25519'
 
 #
 # Syntax Highlighting
@@ -120,15 +136,29 @@ zstyle ':prezto:module:ssh:load' identities 'id_dsa' 'id_rsa'
    'main' \
    'brackets' \
    'pattern' \
+   'line' \
    'cursor'
 #   'root'
+
+#
+# Set syntax highlighting styles.
+# zstyle ':prezto:module:syntax-highlighting' styles \
+#   'builtin' 'bg=blue' \
+#   'command' 'bg=blue' \
+#   'function' 'bg=blue'
 
 #
 # Terminal
 #
 
 # Auto set the tab and window titles.
-zstyle ':prezto:module:terminal' auto-title 'yes'
+# zstyle ':prezto:module:terminal' auto-title 'yes'
+
+# Set the window title format.
+# zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
+
+# Set the tab title format.
+# zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 
 #
 # Tmux
@@ -140,3 +170,5 @@ zstyle ':prezto:module:tmux:auto-start' local 'yes'
 # Auto start a session when Zsh is launched in a SSH connection.
 # zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
+# Integrate with iTerm2.
+zstyle ':prezto:module:tmux:iterm' integrate 'yes'
