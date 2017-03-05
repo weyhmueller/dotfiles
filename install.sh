@@ -9,8 +9,16 @@ function vundle-init() {
 
   if [ ! -d ~/.vim/bundle/vundle/.git/ ]
   then
-    git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
     echo "\n\tRead about vim configuration for vundle at https://github.com/gmarik/vundle\n"
+  fi
+}
+
+function vimplug-init() {
+  if [ ! -f ~/.vim/autoload/plug.vim ]
+  then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim -c "execute \"PlugUpdate\" | q | q"
   fi
 }
 
@@ -19,12 +27,37 @@ function vundle() {
   vim -c "execute \"BundleInstall\" | q | q"
 }
 
+function vimplug() {
+  vimplug-init
+  vim -c "execute \"PlugUpdate\" | q | q"
+  
+}
 
 function vundle-update() {
   vundle-init
   vim -c "execute \"BundleInstall!\" | q | q"
 }
 
+function tpm-init() {
+  if [ ! -d ~/.tmux/plugins/tpm/ ]
+  then
+    mkdir -p ~/.tmux/plugins/tpm/
+  fi
+
+  if [ ! -d ~/.tmux/plugins/tpm/.git/ ]
+  then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  fi
+}
+
+function tpm-update() {
+  tpm-init
+  ~/.tmux/plugins/tpm/bin/clean_plugins
+  ~/.tmux/plugins/tpm/bin/install_plugins
+  ~/.tmux/plugins/tpm/bin/update_plugins all
+
+  tmux source ~/.tmux.conf
+}
 cutstring="DO NOT EDIT BELOW THIS LINE"
 
 rm -rf $HOME/.vim
@@ -69,7 +102,8 @@ for name in *; do
   fi
 done
 
-vundle
+vimplug
+tpm-update
 
 if [ ${SHELL:${#SHELL}-3:3} != "zsh" ]; then
   chsh -s `which zsh`
