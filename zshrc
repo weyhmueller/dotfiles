@@ -3,7 +3,7 @@ DEFAULT_USER=oliver
 
 # DO NOT EDIT BELOW THIS LINE
 if [[ -z $TMUX ]]; then
-  PATH=$HOME/.sysadmin-util:/usr/local/bin:$PATH
+  PATH=$HOME/.sysadmin-util:$PATH:/usr/local/bin
 fi
 # GRC colorizes nifty unix tools all over the place
 GRC=`which grc`

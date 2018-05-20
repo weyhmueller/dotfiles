@@ -14,7 +14,7 @@ POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B6'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_DELIMITER=..
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs rvm virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs zsh_git_user rvm virtualenv)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status disk_usage custom_spotify custom_wifi_signal custom_battery time ssh)
 
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="black"
@@ -59,6 +59,27 @@ zsh_wifi_signal(){
     echo -n "%{$color%}\uf817 %{%f%}"
   fi
 }
+prompt_zsh_git_user(){
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    local gitrepuser="$(git config --local user.email)"
+    local gitglobuser="$(git config --global user.email)"
+    local gituser="${GIT_AUTHOR_EMAIL:-${gitrepuser:-${gitglobuser}}}"
+    local color='black'
+    local bg='136'
+    if [[ ${gituser} == 'oliver@weyhmueller.de' || ${gituser} == '' ]]; then
+      gituser="Oli"
+    elif [[ ${gituser} == 'oliver.weyhmueller@t-systems.com' ]]; then
+      gituser="TSec"
+      color='white'
+      bg='200'
+    else
+      gituser="???"
+    fi
+    # echo -n "%{$bg%}%{$color%}$gituser %{%k%}%{%f%}"
+    $1_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}" 
+  fi
+}
+
 
 zsh_battery_level() {
   if [ "x$POWER_SOURCE" = "xbattery" ] || [ "`uname`" = "Darwin" ] && [ "x$POWER_SOURCE" != "xgrid" ]; then
