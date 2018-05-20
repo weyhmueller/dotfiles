@@ -31,6 +31,10 @@ alias dir="$LSCMD -lht | less"
 
 alias bd="bd -s"
 
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
 # be faster aliase
 alias ..='cd ..'
 alias cd..='cd ..'

@@ -36,80 +36,90 @@ POWERLEVEL9K_CUSTOM_BATTERY_BACKGROUND="black"
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m}"
 
 zsh_wifi_signal(){
-  local output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I)
-  local airport=$(echo $output | grep 'AirPort' | awk -F': ' '{print $2}')
+  if [ "x$NETWORK_CONNECTION_METHOD" = "xwireless" ] || [ "`uname`" = "Darwin" ] && [ "x$NETWORK_CONNECTION_METHOD" != "xwired" ]; then
+    local output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I)
+    local airport=$(echo $output | grep 'AirPort' | awk -F': ' '{print $2}')
 
-  if [ "$airport" = "Off" ]; then
-    local color='%F{grey}'
-    echo -n "%{$color%}\ufaa9 "
+    if [ "$airport" = "Off" ]; then
+      local color='%F{grey}'
+      echo -n "%{$color%}\ufaa9 "
+    else
+      local ssid=$(echo $output | grep ' SSID' | awk -F': ' '{print $2}')
+      local speed=$(echo $output | grep 'lastTxRate' | awk -F': ' '{print $2}')
+      local color='%F{yellow}'
+
+      [[ $speed -gt 100 ]] && color='%F{green}'
+      [[ $speed -lt 50 ]] && color='%F{red}'
+
+      echo -n "%{$color%}\uf1eb %{%f%}" # removed char not in my PowerLine font
+    fi
   else
-    local ssid=$(echo $output | grep ' SSID' | awk -F': ' '{print $2}')
-    local speed=$(echo $output | grep 'lastTxRate' | awk -F': ' '{print $2}')
-    local color='%F{yellow}'
-
-    [[ $speed -gt 100 ]] && color='%F{green}'
-    [[ $speed -lt 50 ]] && color='%F{red}'
-
-    echo -n "%{$color%}\uf1eb %{%f%}" # removed char not in my PowerLine font
+    # This machine has probably no wifi
+    local color='%F{grey}'
+    echo -n "%{$color%}\uf817 %{%f%}"
   fi
 }
 
 zsh_battery_level() {
-  local percentage1=`pmset -g ps  |  sed -n 's/.*[[:blank:]]+*\(.*%\).*/\1/p'`
-  local percentage=`echo "${percentage1//\%}"`
-  local color='%F{red}'
-  local symbol="\uf00d"
-  pmset -g ps | grep "discharging" > /dev/null
-  if [ $? -eq 0 ]; then
-    charging="false";
+  if [ "x$POWER_SOURCE" = "xbattery" ] || [ "`uname`" = "Darwin" ] && [ "x$POWER_SOURCE" != "xgrid" ]; then
+    local percentage1=`pmset -g ps  |  sed -n 's/.*[[:blank:]]+*\(.*%\).*/\1/p'`
+    local percentage=`echo "${percentage1//\%}"`
+    local color='%F{red}'
+    local symbol="\uf00d"
+    pmset -g ps | grep "discharging" > /dev/null
+    if [ $? -eq 0 ]; then
+      charging="false";
+    else
+      charging="true";
+    fi
+    if [ $percentage -le 20 ]
+    then symbol='\uf579' ; color='%F{red}' ;
+      #10%
+    elif [ $percentage -gt 19 ] && [ $percentage -le 30 ]
+    then symbol="\uf57a" ; color='%F{red}' ;
+      #20%
+    elif [ $percentage -gt 29 ] && [ $percentage -le 40 ]
+    then symbol="\uf57b" ; color='%F{yellow}' ;
+      #35%
+    elif [ $percentage -gt 39 ] && [ $percentage -le 50 ]
+    then symbol="\uf57c" ; color='%F{yellow}' ;
+      #45%
+    elif [ $percentage -gt 49 ] && [ $percentage -le 60 ]
+    then symbol="\uf57d" ; color='%F{blue}' ;
+      #55%
+    elif [ $percentage -gt 59 ] && [ $percentage -le 70 ]
+    then symbol="\uf57e" ; color='%F{blue}' ;
+      #65%
+    elif [ $percentage -gt 69 ] && [ $percentage -le 80 ]
+    then symbol="\uf57f" ; color='%F{blue}' ;
+      #75%
+    elif [ $percentage -gt 79 ] && [ $percentage -le 90 ]
+    then symbol="\uf580" ; color='%F{blue}' ;
+      #85%
+    elif [ $percentage -gt 89 ] && [ $percentage -le 100 ]
+    then symbol="\uf581" ; color='%F{blue}' ;
+      #85%
+    elif [ $percentage = 100 ]
+    then symbol="\uf578" ; color='%F{40}' ;
+      #100%
+    fi
+    if [ $charging = "true" ];
+    then color='%F{040}'; symbol='\uf583';  if [ $percentage = 100 ]; then symbol='\uf584'; fi
+    fi
   else
-    charging="true";
-  fi
-  if [ $percentage -le 20 ]
-  then symbol='\uf579' ; color='%F{red}' ;
-    #10%
-  elif [ $percentage -gt 19 ] && [ $percentage -le 30 ]
-  then symbol="\uf57a" ; color='%F{red}' ;
-    #20%
-  elif [ $percentage -gt 29 ] && [ $percentage -le 40 ]
-  then symbol="\uf57b" ; color='%F{yellow}' ;
-    #35%
-  elif [ $percentage -gt 39 ] && [ $percentage -le 50 ]
-  then symbol="\uf57c" ; color='%F{yellow}' ;
-    #45%
-  elif [ $percentage -gt 49 ] && [ $percentage -le 60 ]
-  then symbol="\uf57d" ; color='%F{blue}' ;
-    #55%
-  elif [ $percentage -gt 59 ] && [ $percentage -le 70 ]
-  then symbol="\uf57e" ; color='%F{blue}' ;
-    #65%
-  elif [ $percentage -gt 69 ] && [ $percentage -le 80 ]
-  then symbol="\uf57f" ; color='%F{blue}' ;
-    #75%
-  elif [ $percentage -gt 79 ] && [ $percentage -le 90 ]
-  then symbol="\uf580" ; color='%F{blue}' ;
-    #85%
-  elif [ $percentage -gt 89 ] && [ $percentage -le 100 ]
-  then symbol="\uf581" ; color='%F{blue}' ;
-    #85%
-  elif [ $percentage = 100 ]
-  then symbol="\uf578" ; color='%F{40}' ;
-    #100%
-  fi
-  if [ $charging = "true" ];
-  then color='%F{040}'; symbol='\uf583';  if [ $percentage = 100 ]; then symbol='\uf584'; fi
+    color='%F{040}'; symbol='\ufba3'
   fi
   echo -n "%{$color%}$symbol" ;
 }
 
 zsh_spotify() {
-  local color='%F{white}'
-  state=`osascript -e 'tell application "Spotify" to player state as string'`;
-  if [ $state = "playing" ]; then
-    artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
-    track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
-
+  if [ "`uname`" = "Darwin" ]; then
+    local color='%F{white}'
+    state=`osascript -e 'tell application "Spotify" to player state as string'`;
+    if [ $state = "playing" ]; then
+      artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
+      track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
       echo -n "%{$color%}\uf1bc $artist - $track " ;
-
+    fi
   fi
 }
