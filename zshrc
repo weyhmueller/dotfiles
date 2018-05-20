@@ -25,7 +25,7 @@ then
     alias tail='colourify tail'
 fi
 
-
+source ~/.powerlevel9k
 
 export VISUAL=vim
 export PAGER=less

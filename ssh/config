@@ -24,15 +24,16 @@ Protocol 2
 
 # Almost always get a small win from compression,
 # but we don't want to expend too much CPU on it either.
-Compression yes
-CompressionLevel 4
+#Compression yes
+#CompressionLevel 4
 
 # Try and maintain a connection even if the server concerned
 # is hiding behind a stateful firewall :-(
-ServerAliveInterval 600
+ServerAliveInterval 120
 ServerAliveCountMax 3
 
 ForwardAgent yes
+ForwardX11 no
 
 # Stops the operating system shipping an /etc/ssh/ssh_config
 # which enables hashing, thereby making me quite angry!
@@ -57,36 +58,7 @@ VisualHostKey yes
 
 SendEnv LANG LC_*
 
-Host fw-netscreen-2.intranet.weyhmueller.net fw-netscreen-2 fw-netscreen-1 fw-netscreen-1.intranet.weyhmueller.net 192.168.2.253 192.168.1.253 192.168.69.3 192.168.69.222 192.168.2.254 intranet-ip-2.weyhmueller.net
-    User root
-    ServerAliveInterval 0
-    TCPKeepAlive no
-    HostKeyAlgorithms +ssh-dss
-    KexAlgorithms +diffie-hellman-group1-sha1
-    Ciphers +aes256-cbc
-    MACs +hmac-sha1
-    PasswordAuthentication yes
-    IdentityFile ~/.ssh/id_dsa
-    PubkeyAcceptedKeyTypes=+ssh-dss
-
-Host hades.weyhmueller.net hades lastte.st
-    User ec2-user
-    ServerAliveInterval 10
-    TCPKeepalive yes
-    ServerAliveCountMax 5
-Host idevice.webauth.de
-    User bitnami
-
-Host *.weyhmueller.net nemesis ares demeter persephone hermes artemis poseidon apollon hestia eileithyia hebe pluton herakles dionysos ate charon
-    User root
-    TCPKeepAlive no
-    ServerAliveInterval 30
-
-Host *.intranet.weyhmueller.net uranos nemesis vdrserver vdr3
-    User root
-
-Host git-codecommit.*.amazonaws.com
-  User APKAIJIH3BVINDGUVDMA
+Include ~/.credentials/ssh/config
 
 Host *
   #UseKeychain yes
