@@ -11,11 +11,11 @@ POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="❱❱❱ "
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰\uF460\uF460\uF460 "
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\uE0B4'
 POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B6'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_SHORTEN_DELIMITER=..
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs zsh_git_user rvm virtualenv)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status disk_usage custom_spotify custom_wifi_signal custom_battery time ssh)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs zsh_git_user rvm aws docker_machine virtualenv)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status disk_usage custom_spotify ip custom_wifi_signal_joined custom_battery_joined time ssh)
 
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="black"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="yellow"
@@ -34,6 +34,11 @@ POWERLEVEL9K_CUSTOM_BATTERY_FOREGROUND="white"
 POWERLEVEL9K_CUSTOM_BATTERY_BACKGROUND="black"
 
 POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m}"
+
+POWERLEVEL9K_IP_BACKGROUND="black"
+POWERLEVEL9K_IP_FOREGROUND="white"
+POWERLEVEL9K_IP_ICON=""
+POWERLEVEL9K_NETWORK_ICON=""
 
 zsh_wifi_signal(){
   if [ "x$NETWORK_CONNECTION_METHOD" = "xwireless" ] || [ "`uname`" = "Darwin" ] && [ "x$NETWORK_CONNECTION_METHOD" != "xwired" ]; then
@@ -65,7 +70,7 @@ prompt_zsh_git_user(){
     local gitglobuser="$(git config --global user.email)"
     local gituser="${GIT_AUTHOR_EMAIL:-${gitrepuser:-${gitglobuser}}}"
     local color='black'
-    local bg='136'
+    local bg='yellow'
     if [[ ${gituser} == 'oliver@weyhmueller.de' || ${gituser} == '' ]]; then
       gituser="Oli"
     elif [[ ${gituser} == 'oliver.weyhmueller@t-systems.com' ]]; then
@@ -74,9 +79,10 @@ prompt_zsh_git_user(){
       bg='200'
     else
       gituser="???"
+      bg="red"
     fi
     # echo -n "%{$bg%}%{$color%}$gituser %{%k%}%{%f%}"
-    $1_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}" 
+    $1_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}"
   fi
 }
 
@@ -130,7 +136,7 @@ zsh_battery_level() {
   else
     color='%F{040}'; symbol='\ufba3'
   fi
-  echo -n "%{$color%}$symbol" ;
+  echo -n "%{$color%}$symbol " ;
 }
 
 zsh_spotify() {
