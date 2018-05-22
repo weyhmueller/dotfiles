@@ -15,7 +15,9 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_SHORTEN_DELIMITER=..
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs zsh_git_user rvm aws docker_machine virtualenv)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status disk_usage custom_spotify ip custom_wifi_signal_joined custom_battery_joined time ssh)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status history disk_usage custom_battery time ssh)
+
+POWERLEVEL9K_DISK_USAGE_ONLY_WARNING="true"
 
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="black"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="yellow"
@@ -33,12 +35,18 @@ POWERLEVEL9K_CUSTOM_BATTERY="zsh_battery_level"
 POWERLEVEL9K_CUSTOM_BATTERY_FOREGROUND="white"
 POWERLEVEL9K_CUSTOM_BATTERY_BACKGROUND="black"
 
-POWERLEVEL9K_TIME_FORMAT="%D{\uf017 %H:%M \uf073 %d.%m}"
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 
 POWERLEVEL9K_IP_BACKGROUND="black"
 POWERLEVEL9K_IP_FOREGROUND="white"
 POWERLEVEL9K_IP_ICON=""
 POWERLEVEL9K_NETWORK_ICON=""
+
+# Add some elements which are already displayed in tmux if we are not inside a tmux session
+if [ -z "$TMUX" ]; then
+  POWERLEVEL9K_TIME_FORMAT="%D{%H:%M %d.%m}"
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status history disk_usage custom_spotify ip custom_wifi_signal_joined custom_battery_joined time ssh)
+fi
 
 zsh_wifi_signal(){
   if [ "x$NETWORK_CONNECTION_METHOD" = "xwireless" ] || [ "`uname`" = "Darwin" ] && [ "x$NETWORK_CONNECTION_METHOD" != "xwired" ]; then
@@ -142,11 +150,14 @@ zsh_battery_level() {
 zsh_spotify() {
   if [ "`uname`" = "Darwin" ]; then
     local color='%F{white}'
-    state=`osascript -e 'tell application "Spotify" to player state as string'`;
-    if [ $state = "playing" ]; then
-      artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
-      track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
-      echo -n "%{$color%}\uf1bc $artist - $track " ;
+    local running=`osascript -e 'return application "Spotify" is running'`;
+    if [ $running = "true" ]; then
+      state=`osascript -e 'tell application "Spotify" to player state as string'`;
+      if [ $state = "playing" ]; then
+        artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
+        track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
+        echo -n "%{$color%}\uf1bc $artist - $track " ;
+      fi
     fi
   fi
 }
