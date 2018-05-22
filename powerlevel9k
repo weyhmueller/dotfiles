@@ -149,9 +149,10 @@ zsh_battery_level() {
 
 zsh_spotify() {
   if [ "`uname`" = "Darwin" ]; then
+    local spotpid=`ps -ef | egrep "MacOS/Spotify$" | awk '{print $2}'`
     local color='%F{white}'
-    local running=`osascript -e 'return application "Spotify" is running'`;
-    if [ $running = "true" ]; then
+    local state="disabled"
+    if [ -n $spotpid ]; then
       state=`osascript -e 'tell application "Spotify" to player state as string'`;
       if [ $state = "playing" ]; then
         artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
