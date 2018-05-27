@@ -94,6 +94,7 @@ Plug 'slim-template/vim-slim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'tmux-plugins/vim-tmux'
 " Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
