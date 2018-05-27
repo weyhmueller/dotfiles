@@ -3,13 +3,13 @@ alias task="task rc:/Users/oliver/Dropbox/tasks/.taskrc"
 
 # Use `hub` as our git wrapper:
 #   http://defunkt.github.com/hub/
-hub_path=$(which hub)
+hub_path=$(which hub 2>/dev/null)
 if (( $+commands[hub] ))
 then
   alias git=$hub_path
 fi
 
-ack_path=$(which ack-grep)
+ack_path=$(which ack-grep 2>/dev/null)
 if (( $+commands[ack-grep] ))
 then
   alias ack=$ack_path
