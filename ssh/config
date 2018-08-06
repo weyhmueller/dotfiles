@@ -56,7 +56,7 @@ StrictHostKeyChecking no
 # More likely to notice changes in this than a hex fingerprint!
 VisualHostKey yes
 
-SendEnv LANG LC_*
+#SendEnv LANG LC_*
 
 Include ~/.credentials/ssh/config
 

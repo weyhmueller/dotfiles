@@ -18,7 +18,7 @@ function vimplug-init() {
   if [ ! -f ~/.vim/autoload/plug.vim ]
   then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    vim -c "execute \"PlugUpdate\" | q | q"
+    #vim -c "execute \"PlugUpdate\" | q | q"
   fi
 }
 
@@ -29,7 +29,8 @@ function vundle() {
 
 function vimplug() {
   vimplug-init
-  vim -c "execute \"PlugUpdate\" | q | q"
+  vim +'PlugUpdate --sync' +qall &> /dev/null < /dev/tty
+  #vim -c "execute \"PlugUpdate\" | q | q"
   
 }
 
