@@ -16,6 +16,8 @@
   tool = Kaleidoscope
 
 # DO NOT EDIT BELOW THIS LINE
+[commit]
+  gpgsign = true
 [push]
   default = tracking
 [color]
