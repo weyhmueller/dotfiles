@@ -14,7 +14,7 @@ POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B6'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_SHORTEN_DELIMITER=..
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs zsh_git_user rvm aws docker_machine virtualenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir custom_git_user vcs rvm aws docker_machine virtualenv)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status history disk_usage custom_battery time ssh)
 
 POWERLEVEL9K_DISK_USAGE_ONLY_WARNING="true"
@@ -34,6 +34,10 @@ POWERLEVEL9K_CUSTOM_SPOTIFY_FOREGROUND=15
 POWERLEVEL9K_CUSTOM_BATTERY="zsh_battery_level"
 POWERLEVEL9K_CUSTOM_BATTERY_FOREGROUND="white"
 POWERLEVEL9K_CUSTOM_BATTERY_BACKGROUND="black"
+
+POWERLEVEL9K_CUSTOM_GIT_USER="zsh_git_user"
+POWERLEVEL9K_CUSTOM_GIT_USER_BACKGROUND="yellow"
+POWERLEVEL9K_CUSTOM_GIT_USER_FOREGROUND="black"
 
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 
@@ -72,25 +76,20 @@ zsh_wifi_signal(){
     echo -n "%{$color%}\uf817 %{%f%}"
   fi
 }
-prompt_zsh_git_user(){
+zsh_git_user(){
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     local gitrepuser="$(git config --local user.email)"
     local gitglobuser="$(git config --global user.email)"
     local gituser="${GIT_AUTHOR_EMAIL:-${gitrepuser:-${gitglobuser}}}"
-    local color='black'
-    local bg='yellow'
     if [[ ${gituser} == 'oliver@weyhmueller.de' || ${gituser} == '' ]]; then
       gituser="Oli"
     elif [[ ${gituser} == 'oliver.weyhmueller@t-systems.com' ]]; then
       gituser="TSec"
-      color='white'
-      bg='200'
     else
       gituser="???"
-      bg="red"
     fi
-    # echo -n "%{$bg%}%{$color%}$gituser %{%k%}%{%f%}"
-    $1_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}"
+    echo -n "$gituser"
+    #left_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}"
   fi
 }
 

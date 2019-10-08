@@ -6,7 +6,7 @@ if [[ -z $TMUX ]]; then
   PATH=$HOME/.sysadmin-util:$PATH:/usr/local/bin
 fi
 # GRC colorizes nifty unix tools all over the place
-GRC=`which grc`
+GRC=`which grc 2>/dev/null`
 NOT_FOUND_GRC=$?
 if [ "$TERM" != dumb ] && [ $NOT_FOUND_GRC = 0 ]
 then
