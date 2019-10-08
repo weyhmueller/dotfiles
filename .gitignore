@@ -1,3 +1,9 @@
 !bin
+
+#disallow all ssh keys
 ssh/id_*
+# but enable public keys
+!ssh/id_*.pub
+# but disallow dsa keys
+ssh/id_dsa*
 ssh/known_hosts*
