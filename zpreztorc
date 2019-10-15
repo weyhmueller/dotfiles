@@ -64,7 +64,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-zstyle ':prezto:module:git:status:ignore' submodules 'unrtracked'
+zstyle ':prezto:module:git:status:ignore' submodules 'untracked'
 
 #
 # GNU Utility
