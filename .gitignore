@@ -7,3 +7,5 @@ ssh/id_*
 # but disallow dsa keys
 ssh/id_dsa*
 ssh/known_hosts*
+
+vim/bundle/*
