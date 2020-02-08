@@ -481,7 +481,7 @@
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
-  typeset -g POWERLEVEL9K_STATUS_ERROR=false
+  typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
   # typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=3
   # typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=1
@@ -1198,9 +1198,9 @@
   }
 
   function prompt_spotify() {
-    if [ "`uname`" = "Darwin" ]; then
+    if [[ "`uname`" = "Darwin" && -z "$TMUX" ]]; then
       local nowplaying=$(~/bin/tmux-spotify-info noicon)
-      if [[ ! -z $nowplaying ]]; then
+      if [[ -n $nowplaying ]]; then
         p10k segment -b 034 -f 7 -i '' -t "$nowplaying"
       fi
     fi

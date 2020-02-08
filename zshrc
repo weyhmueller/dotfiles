@@ -7,6 +7,7 @@ fi
 
 PATH=$HOME/bin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 DEFAULT_USER=oliver
+AWS_PROFILE=default
 
 # DO NOT EDIT BELOW THIS LINE
 if [[ -z $TMUX ]]; then
