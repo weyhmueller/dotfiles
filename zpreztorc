@@ -1,5 +1,3 @@
-
-# DO NOT EDIT BELOW THIS LINE
 #
 # Sets Prezto options.
 #
@@ -38,6 +36,7 @@ zstyle ':prezto:load' pmodule \
   'archive' \
   'syntax-highlighting' \
   'history-substring-search' \
+  'autosuggestions' \
   'ssh' \
   'osx' \
   'prompt'
@@ -47,7 +46,7 @@ zstyle ':prezto:load' pmodule \
 #
 
 # Set the query found color.
-# zstyle ':prezto:module:autosuggestions:color' found ''
+zstyle ':prezto:module:autosuggestions:color' found 'fg=10'
 
 #
 # Editor

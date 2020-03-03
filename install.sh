@@ -31,7 +31,6 @@ function vimplug() {
   vimplug-init
   vim +'PlugUpdate --sync' +qall &> /dev/null < /dev/tty
   #vim -c "execute \"PlugUpdate\" | q | q"
-  
 }
 
 function vundle-update() {
@@ -84,7 +83,10 @@ for name in *; do
         fi
         mv update_tmp "$target"
       else
-        echo "WARNING: $target exists but is not a symlink."
+        echo "WARNING: $target exists but is not a symlink. moved it away"
+        mkdir -p ~/.backups/dotfiles
+        mv $target ~/.backups/dotfiles/
+
       fi
     fi
   else

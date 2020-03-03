@@ -7,8 +7,9 @@ fi
 
 PATH=$HOME/bin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 DEFAULT_USER=oliver
-
+AWS_PROFILE=default
 # DO NOT EDIT BELOW THIS LINE
+eval "$(direnv hook zsh)"
 if [[ -z $TMUX ]]; then
   PATH=$HOME/.sysadmin-util:$PATH:/usr/local/bin
 fi
