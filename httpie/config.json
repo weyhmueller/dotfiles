@@ -3,7 +3,6 @@
     "--follow",
     "--style=solarized-dark",
     "--ssl=tls1.2",
-    "--verbose",
-    "--verify=~/.ssl/cacert.pem"
+    "--verbose"
   ]
 }

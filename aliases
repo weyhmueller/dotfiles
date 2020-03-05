@@ -1,6 +1,9 @@
 # task config with dropbox
 alias task="task rc:/Users/oliver/Dropbox/tasks/.taskrc"
 
+# use own ssh ca with httpie
+alias https="https --verify=${HOME}/.ssl/cacert.pem"
+
 # Use `hub` as our git wrapper:
 #   http://defunkt.github.com/hub/
 hub_path=$(which hub 2>/dev/null)
