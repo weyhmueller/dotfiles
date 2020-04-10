@@ -63,6 +63,6 @@ Include ~/.credentials/ssh/config
 Host *
   #UseKeychain yes
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519
-  IdentityFile ~/.ssh/id_ecdsa
-  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ~/.credentials/ssh/id_ed25519
+  IdentityFile ~/.credentials/ssh/id_ecdsa
+  IdentityFile ~/.credentials/ssh/id_rsa
