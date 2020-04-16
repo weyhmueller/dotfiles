@@ -100,7 +100,7 @@ case $(uname -s) in
                 ;;
             esac
             if [[ -n "$maxcap" && -n $curcap && -n $descap ]]; then
-                echo $(( 100 * $curcap / $descap ))
+                echo $(( $maxcap * $curcap / $descap ))
                 break
             fi
         done
