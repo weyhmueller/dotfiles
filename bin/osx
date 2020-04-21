@@ -420,8 +420,8 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Google Chrome                                                               #
 ###############################################################################
 
-# Disable sensitive and senseless swipe-based navigation
-defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
+# Enable sensitive and senseless swipe-based navigation
+defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool true
 
 # Use the system print dialog
 defaults write com.google.Chrome DisablePrintPreview -bool true
