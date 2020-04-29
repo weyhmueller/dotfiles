@@ -28,7 +28,6 @@ set noshowmode
 
 
 set mouse=a
-set term=xterm-256color
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -68,6 +67,7 @@ Plug 'vim-scripts/greplace.vim'
 "Plug 'vim-scripts/taglist.vim'
 Plug 'xenoterracide/html.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'scrooloose/syntastic'
 Plug 'rstacruz/sparkup'
 Plug 'scrooloose/nerdtree'
@@ -98,6 +98,7 @@ Plug 'tmux-plugins/vim-tmux'
 " Plug 'christoomey/vim-tmux-navigator'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -143,10 +144,15 @@ if has('gui_running')
 else
   set background=dark
 endif
-colorscheme solarized
-highlight NonText guibg=#060606
-highlight Folded  guibg=#0A0A0A guifg=#9090D0
-highlight SignColumn ctermbg=8
+set term=xterm-256color
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+"highlight NonText guibg=#060606
+"highlight Folded  guibg=#0A0A0A guifg=#9090D0
+"highlight SignColumn ctermbg=8
 
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=10
@@ -274,6 +280,7 @@ let g:airline_symbols.notexists = 'Ɇ'
 let g:airline_symbols.dirty = ''
 let g:airline_symbols.crypt = ''
 let g:solarized_termtrans = 1
+let g:solarized_extra_hi_groups = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_default_mapping = 0
@@ -312,12 +319,7 @@ augroup whitespace
 augroup END
 
 if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+colorscheme solarized8
