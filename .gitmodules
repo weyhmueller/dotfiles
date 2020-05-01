@@ -1,9 +1,6 @@
 [submodule "zprezto"]
 	path = zprezto
 	url = https://github.com/weyhmueller/prezto
-[submodule "powerline-fonts"]
-	path = powerline-fonts
-  url = https://github.com/powerline/fonts.git
 [submodule "sysadmin-util"]
 	path = sysadmin-util
 	url = https://github.com/weyhmueller/sysadmin-util.git
