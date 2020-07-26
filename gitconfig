@@ -1,6 +1,8 @@
 [user]
   name = Oliver Weyhmueller
   email = oliver@weyhmueller.de
+  username = weyhmueller
+  signingkey = 2ECE9419860C7C3CD1C65D2A5286794099F934A3
 [mergetool]
   keepBackup = true
 [difftool "Kaleidoscope"]
@@ -16,6 +18,7 @@
   tool = Kaleidoscope
 
 # DO NOT EDIT BELOW THIS LINE
+
 [commit]
   gpgsign = true
 [push]
@@ -101,4 +104,6 @@
   # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
   whitespace = space-before-tab,indent-with-non-tab,trailing-space
   pager =
+[gpg "x509"]
+  program = smimesign
 
