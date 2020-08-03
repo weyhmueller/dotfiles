@@ -19,6 +19,8 @@
 
 # DO NOT EDIT BELOW THIS LINE
 
+[init]
+ defaultBranch = main
 [commit]
   gpgsign = true
 [push]
