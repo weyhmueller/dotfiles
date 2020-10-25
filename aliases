@@ -29,9 +29,17 @@ if [ $? -eq 0 ]
 then
   LSCMD="ls --color"
 fi
-alias ls="$LSCMD -Fh"
-alias dir="$LSCMD -lht | less"
 
+if $(/usr/local/bin/exa &>/dev/null)
+then
+  LSCMD="/usr/local/bin/exa"
+  alias ls="$LSCMD -F"
+  alias dir="$LSCMD -lt | less"
+else
+
+  alias ls="$LSCMD -Fh"
+  alias dir="$LSCMD -lht | less"
+fi
 alias bd="bd -s"
 
 alias grep="grep --color=auto"
