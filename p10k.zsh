@@ -469,6 +469,9 @@
     if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver.weyhmueller@t-systems.com" ]]; then
       VCS_STATUS_USER="TSec"
     fi
+    if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver.weyhmueller@bwi.de" ]]; then
+      VCS_STATUS_USER="BWI"
+    fi
     if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver@weyhmueller.de" ]]; then
       VCS_STATUS_USER="Olli"
     fi

@@ -1,6 +1,3 @@
-[submodule "zprezto"]
-	path = zprezto
-	url = https://github.com/weyhmueller/prezto
 [submodule "sysadmin-util"]
 	path = sysadmin-util
 	url = https://github.com/weyhmueller/sysadmin-util.git
