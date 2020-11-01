@@ -46,8 +46,10 @@ z4h install ohmyzsh/ohmyzsh || return
 
 z4h source $Z4H/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
 export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
-eval `keychain --eval --agents ssh,gpg --inherit any --quiet ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa`
-
+if (( $+commands[keychain] ))
+then
+  eval `keychain --eval --agents ssh,gpg --inherit any --quiet ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa`
+fi
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
 # is fully initialized. Everything that requires user interaction or can
