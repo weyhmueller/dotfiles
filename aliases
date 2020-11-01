@@ -29,10 +29,10 @@ if [ $? -eq 0 ]
 then
   LSCMD="ls --color"
 fi
-
-if $(/usr/local/bin/exa &>/dev/null)
+exa_path=$(which exa 2>/dev/null)
+if (( $+commands[exa] ))
 then
-  LSCMD="/usr/local/bin/exa"
+  LSCMD=$exa_path
   alias ls="$LSCMD -F"
   alias dir="$LSCMD -lt | most"
 else

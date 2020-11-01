@@ -32,12 +32,21 @@ zstyle ':z4h:ssh:some-host'   passthrough      'yes'
 zstyle ':zle:up-line-or-beginning-search'   leave-cursor 'yes'
 zstyle ':zle:down-line-or-beginning-search' leave-cursor 'yes'
 
+#  Configure keychain
+zstyle :omz:plugins:keychain agents ssh
+zstyle :omz:plugins:keychain identities ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa
+zstyle :omz:plugins:keychain options --quiet --inherit any-once
+
 # Clone additional Git repositories from GitHub.
 #
 # This doesn't do anything apart from cloning the repository and keeping it
 # up-to-date. Cloned files can be used after `z4h init`. This is just an
 # example. If you don't plan to use Oh My Zsh, delete this line.
 z4h install ohmyzsh/ohmyzsh || return
+
+z4h source $Z4H/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
+export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
+eval `keychain --eval --agents ssh,gpg --inherit any --quiet ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa`
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -46,10 +55,11 @@ z4h install ohmyzsh/ohmyzsh || return
 z4h init || return
 
 # Export environment variables.
-export GPG_TTY=$TTY
+export ZSH_CUSTOM=~/.credentials
 
 # Extend PATH.
 path=(~/bin /usr/local/opt/python@3.8/bin /usr/local/opt/curl/bin $path)
+
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -69,24 +79,37 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copydir/copydir.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/cp/cp.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/dash/dash.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/debian/debian.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/direnv/direnv.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/docker/docker.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/doctl/doctl.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/encode64/encode64.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/extract/extract.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/gem/gem.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git/git.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git-extras/git-extras.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git-lfs/git-lfs.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/helm/helm.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/httpie/httpie.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jsontools/jsontools.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jump/jump.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/keychain/keychain.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/kubectl/kubectl.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/mosh/mosh.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/nmap/nmap.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/osx/osx.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/perms/perms.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/profiles/profiles.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ruby/ruby.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/rvm/rvm.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/thefuck/thefuck.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar/singlechar.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/sudo/sudo.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin/systemadmin.plugin.zsh
+# z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/thefuck/thefuck.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/tmux/tmux.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/vscode/vscode.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/web-search/web-search.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/zsh_reload/zsh_reload.plugin.zsh
 fpath+=($Z4H/ohmyzsh/ohmyzsh/plugins/supervisor)
 
 # Source additional local files if they exist.
@@ -135,13 +158,6 @@ ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red
 ZSH_HIGHLIGHT_STYLES[path]='fg=white'
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
-AWS_PROFILE=default
-DEFAULT_USER=oliver
-
-if [ -e "$HOME/.credentials/vault.env" ]; then
-  source "$HOME/.credentials/vault.env"
-  alias vssh="VAULT_TOKEN=\$(vault login -client-cert=$HOME/.credentials/vault/cert.pem -client-key=$HOME/.credentials/vault/key.pem -       method cert -token-only) SSH_AUTH_SOCK= vault ssh -mode=ca -role=weyhmueller-user  -private-key-path=$HOME/.credentials/ssh/id_ed255       19_cert -public-key-path=$HOME/.credentials/ssh/id_ed25519_cert.pub"
-fi
 
 if [ -e "$HOME/.rvm/scripts/rvm" ]; then
   source "$HOME/.rvm/scripts/rvm"
