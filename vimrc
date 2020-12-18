@@ -171,12 +171,12 @@ let g:snippetsEmu_key = "<S-Tab>"
 set wildmode=list:longest,list:full
 set complete=.,w,t
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 
@@ -273,12 +273,13 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '☰ '
 let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.whitespace = '☲'
+let g:airline_symbols.whitespace = '☲ '
 let g:airline_symbols.notexists = 'Ɇ'
 let g:airline_symbols.dirty = ''
 let g:airline_symbols.crypt = ''
+let g:airline_theme = 'simple'
 let g:solarized_termtrans = 1
 let g:solarized_extra_hi_groups = 1
 let g:indent_guides_guide_size = 1
