@@ -71,16 +71,15 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/lib/clipboard.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/functions.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/grep.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/emoji-clock/emoji-clock.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ansible/ansible.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/aws/aws.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/brew/brew.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/common-aliases/common-aliases.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/colorize/colorize.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer/copybuffer.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copydir/copydir.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/cp/cp.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/dash/dash.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/debian/debian.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/direnv/direnv.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/docker/docker.plugin.zsh
@@ -102,17 +101,14 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/nmap/nmap.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/osx/osx.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/perms/perms.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/profiles/profiles.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ruby/ruby.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/rvm/rvm.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar/singlechar.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/sudo/sudo.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin/systemadmin.plugin.zsh
-# z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/thefuck/thefuck.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/tmux/tmux.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/vscode/vscode.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/web-search/web-search.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/zsh_reload/zsh_reload.plugin.zsh
-fpath+=($Z4H/ohmyzsh/ohmyzsh/plugins/supervisor)
 
 # Source additional local files if they exist.
 z4h source ~/.iterm2_shell_integration.zsh
@@ -164,3 +160,6 @@ ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
 if [ -e "$HOME/.rvm/scripts/rvm" ]; then
   source "$HOME/.rvm/scripts/rvm"
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
