@@ -1631,7 +1631,7 @@
 
   function prompt_spotify() {
     if [[ "`uname`" = "Darwin" && -z "$TMUX" ]]; then
-      local nowplaying=$(~/bin/tmux-spotify-info noicon)
+      local nowplaying=$(~/bin/spotify-info noicon)
       if [[ -n $nowplaying ]]; then
         p10k segment -b 034 -f 7 -i '' -t "$nowplaying"
       fi
