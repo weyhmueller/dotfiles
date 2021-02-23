@@ -9,3 +9,4 @@ ssh/id_dsa*
 ssh/known_hosts*
 
 vim/bundle/*
+vim/pack/themes/start/dracula_pro
