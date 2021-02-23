@@ -1,0 +1,21 @@
+#!/bin/sh
+# Returns the current playing song in Spotify
+
+  if [ "x$1" = "xicon" ]; then
+    ICON="阮"
+  else
+    ICON=""
+  fi
+  STATUS="$(~/.tmux/plugins/tmux-spotify/scripts/status.sh)"
+ 
+  if [ "x$STATUS" != "x■" ]; then
+    ARTIST="$(~/.tmux/plugins/tmux-spotify/scripts/artist.sh)"
+    TRACK="$(~/.tmux/plugins/tmux-spotify/scripts/track.sh)"
+    ALBUM="$(~/.tmux/plugins/tmux-spotify/scripts/album.sh)"
+    if [ "x$ARTIST" != "x" ]; then
+      printf "%s %s - %s" "$STATUS" "$ARTIST" "$TRACK"
+    else
+      printf "%s %s" "$STATUS" "$TRACK"
+    fi
+  fi
+
