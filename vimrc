@@ -99,6 +99,7 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'dense-analysis/ale'
+packadd! dracula_pro
 
 call plug#end()
 
@@ -287,6 +288,12 @@ let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_default_mapping = 0
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 
+let g:dracula_colorterm = 1
+let g:dracula_bold = 1
+let g:dracula_italic = 1
+let g:dracula_underline = 1
+let g:dracula_undercurl = 1
+let g:dracula_inverse = 1
 
 set t_ku=OA
 set t_kd=OB
@@ -323,4 +330,4 @@ if (has("nvim"))
   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
-colorscheme solarized8
+colorscheme dracula_pro_van_helsing

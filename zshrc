@@ -11,13 +11,13 @@ zstyle ':z4h:' auto-update-days '28'
 
 # Automaticaly wrap TTY with a transparent tmux ('integrated'), or start a
 # full-fledged tmux ('system'), or disable features that require tmux ('no').
-zstyle ':z4h:' start-tmux       'system'
+zstyle ':z4h:' start-tmux       'no'
 # Move prompt to the bottom when zsh starts up so that it's always in the
 # same position. Has no effect if start-tmux is 'no'.
 zstyle ':z4h:' prompt-at-bottom 'yes'
 
 # Keyboard type: 'mac' or 'pc'.
-zstyle ':z4h:bindkey'         keyboard         'mac'
+zstyle ':z4h:bindkey' keyboard  'mac'
 # When fzf menu opens on TAB, another TAB moves the cursor down ('tab:down')
 # or accepts the selection and triggers another TAB-completion ('tab:repeat')?
 zstyle ':z4h:fzf-complete'    fzf-bindings     'tab:repeat'
@@ -26,7 +26,7 @@ zstyle ':z4h:fzf-complete'    fzf-bindings     'tab:repeat'
 zstyle ':z4h:cd-down'         fzf-bindings     'tab:down'
 # Right-arrow key accepts one character ('partial-accept') from
 # command autosuggestions or the whole thing ('accept')?
-zstyle ':z4h:autosuggestions' forward-char     'accept'
+zstyle ':z4h:autosuggestions' forward-char 'accept'
 
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
 # ssh when connecting to these hosts.
@@ -71,7 +71,7 @@ z4h init || return
 export ZSH_CUSTOM=~/.credentials
 
 # Extend PATH.
-path=(~/bin /usr/local/opt/python@3.8/bin /usr/local/opt/curl/bin $path)
+path=(~/bin /usr/local/opt/python@3.9/bin /opt/homebrew/opt/curl/bin $path)
 
 
 # Use additional Git repositories pulled in with `z4h install`.

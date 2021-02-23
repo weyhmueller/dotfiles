@@ -182,7 +182,7 @@
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
   typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=7
-  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=0
+  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=232
   # Make the icon bold.
   typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='%B${P9K_CONTENT// }'
 
@@ -389,25 +389,33 @@
     local conflicted='%1F' # red foreground
 
     local res
-    local where  # branch or tag
+
     if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
-      res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}"
-      where=${(V)VCS_STATUS_LOCAL_BRANCH}
-    elif [[ -n $VCS_STATUS_TAG ]]; then
-      res+="${meta}#"
-      where=${(V)VCS_STATUS_TAG}
+      local branch=${(V)VCS_STATUS_LOCAL_BRANCH}
+      # If local branch name is at most 32 characters long, show it in full.
+      # Otherwise show the first 12 … the last 12.
+      # Tip: To always show local branch name in full without truncation, delete the next line.
+      (( $#branch > 32 )) && branch[13,-13]="…"  # <-- this line
+      res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
     fi
 
-    # If local branch name or tag is at most 32 characters long, show it in full.
-    # Otherwise show the first 12 … the last 12.
-    # Tip: To always show local branch name in full without truncation, delete the next line.
-    (( $#where > 32 )) && where[13,-13]="…"
+    if [[ -n $VCS_STATUS_TAG
+          # Show tag only if not on a branch.
+          # Tip: To always show tag, delete the next line.
+          && -z $VCS_STATUS_LOCAL_BRANCH  # <-- this line
+        ]]; then
+      local tag=${(V)VCS_STATUS_TAG}
+      # If tag name is at most 32 characters long, show it in full.
+      # Otherwise show the first 12 … the last 12.
+      # Tip: To always show tag name in full without truncation, delete the next line.
+      (( $#tag > 32 )) && tag[13,-13]="…"  # <-- this line
+      res+="${meta}#${clean}${tag//\%/%%}"
+    fi
 
-    res+="${clean}${where//\%/%%}"  # escape %
-
-    # Display the current Git commit if there is no branch or tag.
-    # Tip: To always display the current Git commit, remove `[[ -z $where ]] &&` from the next line.
-    [[ -z $where ]] && res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
+    # Display the current Git commit if there is no branch and no tag.
+    # Tip: To always display the current Git commit, delete the next line.
+    [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_LOCAL_BRANCH ]] &&  # <-- this line
+      res+="${meta}@${clean}${VCS_STATUS_COMMIT[1,8]}"
 
     # Show tracking branch name if it differs from local branch.
     if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
@@ -541,7 +549,7 @@
   # Show duration of the last command if takes at least this many seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   # Show this many fractional digits. Zero means round to seconds.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=2
   # Duration format: 1d 2h 3m 4s.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
   # Custom icon.
@@ -552,7 +560,7 @@
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
   # typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=6
-  # typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=0
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=232
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -561,7 +569,7 @@
   #######################[ direnv: direnv status (https://direnv.net/) ]########################
   # Direnv color.
   # typeset -g POWERLEVEL9K_DIRENV_FOREGROUND=3
-  # typeset -g POWERLEVEL9K_DIRENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_DIRENV_BACKGROUND=232
   # Custom icon.
   # typeset -g POWERLEVEL9K_DIRENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -676,7 +684,7 @@
   # typeset -g POWERLEVEL9K_ASDF_LUA_SHOW_ON_UPGLOB='*.foo|*.bar'
 
   # Java version from asdf.
-  typeset -g POWERLEVEL9K_ASDF_JAVA_FOREGROUND=1
+  typeset -g POWERLEVEL9K_ASDF_JAVA_FOREGROUND=196
   typeset -g POWERLEVEL9K_ASDF_JAVA_BACKGROUND=7
   # typeset -g POWERLEVEL9K_ASDF_JAVA_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # typeset -g POWERLEVEL9K_ASDF_JAVA_SHOW_ON_UPGLOB='*.foo|*.bar'
@@ -775,7 +783,7 @@
   ##################################[ disk_usage: disk usage ]##################################
   # Colors for different levels of disk usage.
   # typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=3
-  # typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=0
+  typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_BACKGROUND=232
   # typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=0
   # typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_BACKGROUND=3
   # typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=7
@@ -899,10 +907,10 @@
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND=0
   # Context color in SSH without privileges.
   typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=3
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=0
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=232
   # Default context color (no privileges, no SSH).
   typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=3
-  typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND=0
+  typeset -g POWERLEVEL9K_CONTEXT_BACKGROUND=232
 
   # Context format when running with privileges: user@hostname.
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%n@%m'
@@ -1012,7 +1020,7 @@
   ##########[ nodenv: node.js version from nodenv (https://github.com/nodenv/nodenv) ]##########
   # Nodenv color.
   # typeset -g POWERLEVEL9K_NODENV_FOREGROUND=2
-  # typeset -g POWERLEVEL9K_NODENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_NODENV_BACKGROUND=232
   # Hide node version if it doesn't come from one of these sources.
   typeset -g POWERLEVEL9K_NODENV_SOURCES=(shell local global)
   # If set to false, hide node version if it's the same as global:
@@ -1033,7 +1041,7 @@
   ############[ nodeenv: node.js environment (https://github.com/ekalinin/nodeenv) ]############
   # Nodeenv color.
   # typeset -g POWERLEVEL9K_NODEENV_FOREGROUND=2
-  # typeset -g POWERLEVEL9K_NODEENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_NODEENV_BACKGROUND=232
   # Don't show Node version next to the environment name.
   typeset -g POWERLEVEL9K_NODEENV_SHOW_NODE_VERSION=false
   # Separate environment name from Node version only with a space.
@@ -1109,7 +1117,7 @@
 
   ####################[ java_version: java version (https://www.java.com/) ]####################
   # Java version color.
-  typeset -g POWERLEVEL9K_JAVA_VERSION_FOREGROUND=1
+  typeset -g POWERLEVEL9K_JAVA_VERSION_FOREGROUND=196
   typeset -g POWERLEVEL9K_JAVA_VERSION_BACKGROUND=7
   # Show java version only when in a java project subdirectory.
   typeset -g POWERLEVEL9K_JAVA_VERSION_PROJECT_ONLY=true
@@ -1167,7 +1175,7 @@
 
   ###############[ jenv: java version from jenv (https://github.com/jenv/jenv) ]################
   # Java color.
-  # typeset -g POWERLEVEL9K_JENV_FOREGROUND=1
+  typeset -g POWERLEVEL9K_JENV_FOREGROUND=196
   # typeset -g POWERLEVEL9K_JENV_BACKGROUND=7
   # Hide java version if it doesn't come from one of these sources.
   typeset -g POWERLEVEL9K_JENV_SOURCES=(shell local global)
@@ -1269,7 +1277,7 @@
       # '*test*'  TEST    # to match your needs. Customize them as needed.
       '*'         OTHER)
   typeset -g POWERLEVEL9K_TERRAFORM_OTHER_FOREGROUND=4
-  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND=0
+  typeset -g POWERLEVEL9K_TERRAFORM_OTHER_BACKGROUND=232
   # typeset -g POWERLEVEL9K_TERRAFORM_OTHER_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
@@ -1400,7 +1408,7 @@
   #[ aws_eb_env: aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/) ]#
   # AWS Elastic Beanstalk environment color.
   # typeset -g POWERLEVEL9K_AWS_EB_ENV_FOREGROUND=2
-  # typeset -g POWERLEVEL9K_AWS_EB_ENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_AWS_EB_ENV_BACKGROUND=232
   # Custom icon.
   # typeset -g POWERLEVEL9K_AWS_EB_ENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1514,7 +1522,7 @@
   ###############################[ public_ip: public IP address ]###############################
   # Public IP color.
   # typeset -g POWERLEVEL9K_PUBLIC_IP_FOREGROUND=7
-  # typeset -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=0
+  typeset -g POWERLEVEL9K_PUBLIC_IP_BACKGROUND=232
   # Custom icon.
   # typeset -g POWERLEVEL9K_PUBLIC_IP_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1538,7 +1546,7 @@
   ###########[ ip: ip address and bandwidth usage for a specified network interface ]###########
   # IP color.
   typeset -g POWERLEVEL9K_IP_BACKGROUND=4
-  typeset -g POWERLEVEL9K_IP_FOREGROUND=0
+  typeset -g POWERLEVEL9K_IP_FOREGROUND=232
   # The following parameters are accessible within the expansion:
   #
   #   Parameter             | Meaning
@@ -1559,7 +1567,7 @@
   #########################[ proxy: system-wide http/https/ftp proxy ]##########################
   # Proxy color.
   # typeset -g POWERLEVEL9K_PROXY_FOREGROUND=4
-  # typeset -g POWERLEVEL9K_PROXY_BACKGROUND=0
+  typeset -g POWERLEVEL9K_PROXY_BACKGROUND=232
   # Custom icon.
   # typeset -g POWERLEVEL9K_PROXY_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
@@ -1575,7 +1583,7 @@
   typeset -g POWERLEVEL9K_BATTERY_STAGES='\uf58d\uf579\uf57a\uf57b\uf57c\uf57d\uf57e\uf57f\uf580\uf581\uf578'
   # Don't show the remaining time to charge/discharge.
   typeset -g POWERLEVEL9K_BATTERY_VERBOSE=false
-  # typeset -g POWERLEVEL9K_BATTERY_BACKGROUND=0
+  typeset -g POWERLEVEL9K_BATTERY_BACKGROUND=232
 
   #####################################[ wifi: wifi speed ]#####################################
   # WiFi color.
