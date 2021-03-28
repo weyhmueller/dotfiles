@@ -107,7 +107,7 @@
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
     battery               # internal battery
-    # wifi                  # wifi speed
+    wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
   )
 
@@ -456,13 +456,13 @@
     VCS_STATUS_USER=""
     VCS_STATUS_ACTIVE_USER_EMAIL=$(git config user.email)
     if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver.weyhmueller@t-systems.com" ]]; then
-      VCS_STATUS_USER="TSec"
+      VCS_STATUS_USER=""
     fi
     if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver.weyhmueller@bwi.de" ]]; then
-      VCS_STATUS_USER="BWI"
+      VCS_STATUS_USER=""
     fi
     if [[ $VCS_STATUS_ACTIVE_USER_EMAIL = "oliver@weyhmueller.de" ]]; then
-      VCS_STATUS_USER="Olli"
+      VCS_STATUS_USER=""
     fi
     res+=" ${VCS_STATUS_USER}"
 
@@ -1283,7 +1283,7 @@
   #############[ kubecontext: current kubernetes context (https://kubernetes.io/) ]#############
   # Show kubecontext only when the the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show kubecontext.
-  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
+  typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile|fluxctl|stern'
 
   # Kubernetes context classes for the purpose of using different colors, icons and expansions with
   # different contexts.
@@ -1535,7 +1535,7 @@
   typeset -g POWERLEVEL9K_VPN_IP_CONTENT_EXPANSION=
   # Regular expression for the VPN network interface. Run `ifconfig` or `ip -4 a show` while on VPN
   # to see the name of the interface.
-  typeset -g POWERLEVEL9K_VPN_IP_INTERFACE='(gpd|wg|gif|(.*tun))[0-9]*'
+  typeset -g POWERLEVEL9K_VPN_IP_INTERFACE='(gpd|wg|gif|(.*tun)|tailscale)[0-9]*'
   # If set to true, show one segment per matching network interface. If set to false, show only
   # one segment corresponding to the first matching network interface.
   # Tip: If you set it to true, you'll probably want to unset POWERLEVEL9K_VPN_IP_CONTENT_EXPANSION.
@@ -1582,7 +1582,7 @@
   # Battery pictograms going from low to high level of charge.
   typeset -g POWERLEVEL9K_BATTERY_STAGES='\uf58d\uf579\uf57a\uf57b\uf57c\uf57d\uf57e\uf57f\uf580\uf581\uf578'
   # Don't show the remaining time to charge/discharge.
-  typeset -g POWERLEVEL9K_BATTERY_VERBOSE=false
+  typeset -g POWERLEVEL9K_BATTERY_VERBOSE=true
   typeset -g POWERLEVEL9K_BATTERY_BACKGROUND=232
 
   #####################################[ wifi: wifi speed ]#####################################
@@ -1671,7 +1671,8 @@
   }
 
   # User-defined prompt segments can be customized the same way as built-in segments.
-  # typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=3
+  typeset -g POWERLEVEL9K_EXAMPLE_FOREGROUND=3
+  typeset -g POWERLEVEL9K_EXAMPLE_BACKGROUND=1
   # typeset -g POWERLEVEL9K_EXAMPLE_VISUAL_IDENTIFIER_EXPANSION='⭐'
 
   # Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
