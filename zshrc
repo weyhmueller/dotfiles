@@ -91,7 +91,7 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer/copybuffer.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copydir/copydir.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/cp/cp.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/debian/debian.plugin.zsh
+# z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/debian/debian.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/direnv/direnv.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/docker/docker.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/doctl/doctl.plugin.zsh
@@ -164,7 +164,7 @@ alias ls="${aliases[ls]:-ls} -g"
 # look for ey config in project dirs
 export EYRC=./.eyrc
 ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red
-ZSH_HIGHLIGHT_STYLES[path]='fg=white'
+ZSH_HIGHLIGHT_STYLES[path]='fg=7'
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
 
