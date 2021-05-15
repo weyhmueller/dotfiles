@@ -58,11 +58,13 @@ VisualHostKey yes
 
 #SendEnv LANG LC_*
 
+IdentitiesOnly yes
+
 Include ~/.credentials/ssh/config
 
 Host *
   #UseKeychain yes
-  AddKeysToAgent yes
-  IdentityFile ~/.credentials/ssh/id_ed25519
-  IdentityFile ~/.credentials/ssh/id_ecdsa
-  IdentityFile ~/.credentials/ssh/id_rsa
+  AddKeysToAgent 60m
+  #IdentityFile ~/.credentials/ssh/id_ed25519
+  #IdentityFile ~/.credentials/ssh/id_ecdsa
+  #IdentityFile ~/.credentials/ssh/id_rsa
