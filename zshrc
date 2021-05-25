@@ -43,11 +43,6 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 zstyle ':zle:up-line-or-beginning-search'   leave-cursor 'yes'
 zstyle ':zle:down-line-or-beginning-search' leave-cursor 'yes'
 
-#  Configure keychain
-zstyle :omz:plugins:keychain agents ssh
-zstyle :omz:plugins:keychain identities ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa
-zstyle :omz:plugins:keychain options --quiet --inherit any-once
-
 # Clone additional Git repositories from GitHub.
 #
 # This doesn't do anything apart from cloning the repository and keeping it
@@ -57,10 +52,11 @@ z4h install ohmyzsh/ohmyzsh || return
 
 z4h source $Z4H/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
 export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
-if (( $+commands[keychain] ))
-then
-  eval `keychain --eval --agents ssh,gpg --inherit any --quiet ~/.credentials/ssh/id_ed25519 ~/.credentials/ssh/id_ecdsa ~/.credentials/ssh/id_rsa`
-fi
+
+unset SSH_AUTH_SOCK
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities id_ed25519 id_ed25519_sk_5c1 id_ed25519_sk_5cnfc1 id_ed25519_sk_5cnfc2
+
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
 # is fully initialized. Everything that requires user interaction or can
@@ -71,7 +67,7 @@ z4h init || return
 export ZSH_CUSTOM=~/.credentials
 
 # Extend PATH.
-path=(~/bin /usr/local/opt/python@3.9/bin /opt/homebrew/opt/curl/bin $path)
+path=(~/bin /usr/local/opt/python@3.9/bin /opt/homebrew/opt/curl/bin /opt/homebrew/bin $path)
 
 
 # Use additional Git repositories pulled in with `z4h install`.
@@ -105,7 +101,6 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/helm/helm.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/httpie/httpie.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jsontools/jsontools.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jump/jump.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/keychain/keychain.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/kubectl/kubectl.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/mosh/mosh.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/nmap/nmap.plugin.zsh
@@ -113,6 +108,7 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/osx/osx.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/perms/perms.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/profiles/profiles.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/rvm/rvm.plugin.zsh
+z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar/singlechar.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/sudo/sudo.plugin.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin/systemadmin.plugin.zsh

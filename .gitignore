@@ -4,9 +4,11 @@
 ssh/id_*
 # but enable public keys
 !ssh/id_*.pub
-# but disallow dsa keys
+# but disallow dsa keys and ssh certs
 ssh/id_dsa*
+ssh/id_*-cert.pub
 ssh/known_hosts*
+ssh/environment*
 
 vim/bundle/*
 vim/pack/themes/start/dracula_pro
