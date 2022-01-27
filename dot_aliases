@@ -1,0 +1,71 @@
+# task config with dropbox
+alias task="task rc:/Users/oliver/Dropbox/tasks/.taskrc"
+
+# use own ssh ca with httpie
+alias https="https --verify=${HOME}/.ssl/cacert.pem"
+
+# Use `hub` as our git wrapper:
+#   http://defunkt.github.com/hub/
+hub_path=$(which hub 2>/dev/null)
+if (( $+commands[hub] ))
+then
+  alias git=$hub_path
+fi
+
+ack_path=$(which ack-grep 2>/dev/null)
+if (( $+commands[ack-grep] ))
+then
+  alias ack=$ack_path
+fi
+
+LSCMD="ls -G"
+if $(gls &>/dev/null)
+then
+  LSCMD="gls --color"
+fi
+\ls --help &>/dev/null
+
+if [ $? -eq 0 ]
+then
+  LSCMD="ls --color"
+fi
+exa_path=$(which exa 2>/dev/null)
+if (( $+commands[exa] ))
+then
+  LSCMD=$exa_path
+  alias ls="$LSCMD -F"
+  alias dir="$LSCMD -lt | most"
+else
+
+  alias ls="$LSCMD -Fh"
+  alias dir="$LSCMD -lht | most"
+fi
+alias bd="bd -s"
+
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
+# be faster aliase
+alias ..='cd ..'
+alias cd..='cd ..'
+alias ...='cd ../..'
+alias cd...='cd ../..'
+alias cls='clear'
+alias df='df -h'
+
+# Unix
+alias tlf="tail -f"
+alias ln='ln -v'
+alias mkdir='mkdir -p'
+
+alias -g LIN='| wc -l'
+alias -g ONE="| awk '{ print \$1}'"
+alias -g TWO="| awk '{ print \$2}'"
+alias -g THREE="| awk '{ print \$3}'"
+alias -g FOUR="| awk '{ print \$4}'"
+alias -g FIVE="| awk '{ print \$5}'"
+alias -g SIX="| awk '{ print \$6}'"
+alias -g SEVEN="| awk '{ print \$7}'"
+alias -g EIGHT="| awk '{ print \$8}'"
+alias -g NINE="| awk '{ print \$9}'"

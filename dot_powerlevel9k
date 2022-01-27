@@ -1,0 +1,181 @@
+POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=false
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+POWERLEVEL9K_STATUS_VERBOSE=true
+POWERLEVEL9K_STATUS_CROSS=false
+
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭"
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="❱❱❱ "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰\uF460\uF460\uF460 "
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\uE0B4'
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B6'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHORTEN_DELIMITER=..
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir custom_git_user vcs rvm aws docker_machine virtualenv)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status history disk_usage custom_battery time ssh)
+
+POWERLEVEL9K_DISK_USAGE_ONLY_WARNING="true"
+
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="black"
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="yellow"
+POWERLEVEL9K_EXECUTION_TIME_ICON="\uf64f"
+
+POWERLEVEL9K_ALWAYS_SHOW_USER=true
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="green"
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="black"
+POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND="red"
+POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="white"
+POWERLEVEL9K_CONTEXT_SUDO_FOREGROUND="red"
+POWERLEVEL9K_CONTEXT_SUDO_BACKGROUND="white"
+POWERLEVEL9K_CONTEXT_REMOTE_SUDO_FOREGROUND="purple"
+POWERLEVEL9K_CONTEXT_REMOTE_SUDO_BACKGROUND="white"
+POWERLEVEL9K_CONTEXT_REMOTE_FOREGROUND="white"
+POWERLEVEL9K_CONTEXT_REMOTE_BACKGROUND="purple"
+
+
+
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="black"
+POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="white"
+
+POWERLEVEL9K_CUSTOM_SPOTIFY="zsh_spotify"
+POWERLEVEL9K_CUSTOM_SPOTIFY_BACKGROUND=34
+POWERLEVEL9K_CUSTOM_SPOTIFY_FOREGROUND=15
+
+POWERLEVEL9K_CUSTOM_BATTERY="zsh_battery_level"
+POWERLEVEL9K_CUSTOM_BATTERY_FOREGROUND="white"
+POWERLEVEL9K_CUSTOM_BATTERY_BACKGROUND="black"
+
+POWERLEVEL9K_CUSTOM_GIT_USER="zsh_git_user"
+POWERLEVEL9K_CUSTOM_GIT_USER_BACKGROUND="yellow"
+POWERLEVEL9K_CUSTOM_GIT_USER_FOREGROUND="black"
+
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
+
+POWERLEVEL9K_IP_BACKGROUND="black"
+POWERLEVEL9K_IP_FOREGROUND="white"
+POWERLEVEL9K_IP_ICON=""
+POWERLEVEL9K_NETWORK_ICON=""
+
+# Add some elements which are already displayed in tmux if we are not inside a tmux session
+if [ -z "$TMUX" ]; then
+  POWERLEVEL9K_TIME_FORMAT="%D{%H:%M %d.%m}"
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status history disk_usage custom_spotify ip custom_wifi_signal_joined custom_battery_joined time ssh)
+fi
+
+zsh_wifi_signal(){
+  if [ "x$NETWORK_CONNECTION_METHOD" = "xwireless" ] || [ "`uname`" = "Darwin" ] && [ "x$NETWORK_CONNECTION_METHOD" != "xwired" ]; then
+    local output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I)
+    local airport=$(echo $output | grep 'AirPort' | awk -F': ' '{print $2}')
+
+    if [ "$airport" = "Off" ]; then
+      local color='%F{grey}'
+      echo -n "%{$color%}\ufaa9"
+    else
+      local ssid=$(echo $output | grep ' SSID' | awk -F': ' '{print $2}')
+      local speed=$(echo $output | grep 'lastTxRate' | awk -F': ' '{print $2}')
+      local color='%F{yellow}'
+
+      [[ $speed -gt 100 ]] && color='%F{green}'
+      [[ $speed -lt 50 ]] && color='%F{red}'
+
+      echo -n "%{$color%}\uf1eb %{%f%}" # removed char not in my PowerLine font
+    fi
+  else
+    # This machine has probably no wifi
+    local color='%F{grey}'
+    echo -n "%{$color%}\uf817 %{%f%}"
+  fi
+}
+zsh_git_user(){
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    local gitrepuser="$(git config --local user.email)"
+    local gitglobuser="$(git config --global user.email)"
+    local gituser="${GIT_AUTHOR_EMAIL:-${gitrepuser:-${gitglobuser}}}"
+    if [[ ${gituser} == 'oliver@weyhmueller.de' || ${gituser} == '' ]]; then
+      gituser="Oli"
+    elif [[ ${gituser} == 'oliver.weyhmueller@t-systems.com' ]]; then
+      gituser="TSec"
+    else
+      gituser="???"
+    fi
+    echo -n "$gituser"
+    #left_prompt_segment "$0" "$2" "$bg" "$color" "\uf415 ${gituser}"
+  fi
+}
+
+
+zsh_battery_level() {
+  if [ "x$POWER_SOURCE" = "xbattery" ] || [ "`uname`" = "Darwin" ] && [ "x$POWER_SOURCE" != "xgrid" ]; then
+    local percentage1=`pmset -g ps  |  sed -n 's/.*[[:blank:]]+*\(.*%\).*/\1/p'`
+    local percentage=`echo "${percentage1//\%}"`
+    local color='%F{red}'
+    local symbol="\uf00d"
+    pmset -g ps | grep "discharging" > /dev/null
+    if [ $? -eq 0 ]; then
+      charging="false";
+    else
+      charging="true";
+    fi
+    if [ $percentage -le 20 ]
+    then symbol='\uf579' ; color='%F{red}' ;
+      #10%
+    elif [ $percentage -gt 19 ] && [ $percentage -le 30 ]
+    then symbol="\uf57a" ; color='%F{red}' ;
+      #20%
+    elif [ $percentage -gt 29 ] && [ $percentage -le 40 ]
+    then symbol="\uf57b" ; color='%F{yellow}' ;
+      #35%
+    elif [ $percentage -gt 39 ] && [ $percentage -le 50 ]
+    then symbol="\uf57c" ; color='%F{yellow}' ;
+      #45%
+    elif [ $percentage -gt 49 ] && [ $percentage -le 60 ]
+    then symbol="\uf57d" ; color='%F{blue}' ;
+      #55%
+    elif [ $percentage -gt 59 ] && [ $percentage -le 70 ]
+    then symbol="\uf57e" ; color='%F{blue}' ;
+      #65%
+    elif [ $percentage -gt 69 ] && [ $percentage -le 80 ]
+    then symbol="\uf57f" ; color='%F{blue}' ;
+      #75%
+    elif [ $percentage -gt 79 ] && [ $percentage -le 90 ]
+    then symbol="\uf580" ; color='%F{blue}' ;
+      #85%
+    elif [ $percentage -gt 89 ] && [ $percentage -le 100 ]
+    then symbol="\uf581" ; color='%F{blue}' ;
+      #85%
+    elif [ $percentage = 100 ]
+    then symbol="\uf578" ; color='%F{40}' ;
+      #100%
+    fi
+    if [ $charging = "true" ];
+    then color='%F{040}'; symbol='\uf583';  if [ $percentage = 100 ]; then symbol='\uf584'; fi
+    fi
+  else
+    color='%F{040}'; symbol='\ufba3'
+  fi
+  echo -n "%{$color%}$symbol " ;
+}
+
+zsh_spotify() {
+  if [ "`uname`" = "Darwin" ]; then
+    local spotpid=`ps -ef | egrep "MacOS/Spotify$" | awk '{print $2}'`
+    local color='%F{white}'
+    local state="disabled"
+    if [ -n $spotpid ]; then
+      state=`osascript -e 'tell application "Spotify" to player state as string'`;
+      if [ $state = "playing" ]; then
+        artist=`osascript -e 'tell application "Spotify" to artist of current track as string'`;
+        track=`osascript -e 'tell application "Spotify" to name of current track as string'`;
+        echo -n "%{$color%}\uf1bc $artist - $track " ;
+        #local nowplaying=$(~/bin/prompt-spotify-info)
+        #if [ -n $nowplaying ]
+        #      echo -n "%{$color%}\uf1bc $nowplaying " ;
+        #fi
+      fi
+    fi
+  fi
+}
