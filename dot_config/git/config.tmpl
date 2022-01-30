@@ -1,0 +1,146 @@
+[user]
+name = Oliver Weyhmueller
+email = {{ (onepasswordDetailsFields "5o2mjxzzjyullqhdjxjgua2jie" .work_vault).username.value }}
+signingkey = 2ECE9419860C7C3CD1C65D2A5286794099F934A3
+
+[core]
+excludesfile = ~/.config/git/ignore
+autocrlf = input
+attributesfile = ~/config/git/attributes
+whitespace = space-before-tab,tab-in-indent,trailing-space,tabwidth=2
+pager =
+mergeoptions = --no-edit
+commitGraph = true
+
+[credential]
+
+[gpg "x509"]
+program = smimesign
+
+[diff]
+algorithm = histogram
+renames = copies
+[difftool]
+prompt = false
+
+[merge]
+log = true
+[mergetool]
+prompt = false
+keepBackup = false
+keepTemporaries = false
+
+[init]
+defaultBranch = main
+[commit]
+gpgsign = true
+[fetch]
+prune = true
+[pull]
+rebase = true
+[push]
+default = upstream
+[rebase]
+autoStash = true
+[color]
+branch = auto
+diff = auto
+status = auto
+[format]
+pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
+[apply]
+whitespace = fix
+[help]
+autocorrect = 20
+
+[filter "lfs"]
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
+
+[alias]
+ci = commit -v
+create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
+delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
+merge-branch = !git checkout master && git merge @{-1} --ff-only
+rebase-origin = !git fetch origin && git rebase origin/master
+show-graph = log --graph --abbrev-commit --pretty=oneline
+all = add -A
+amend = commit --amend -C HEAD
+credit = commit --amend --author "$1 <$2>" -C HEAD
+delete-local-merged = branch -d `git branch --merged | grep -v '^*' | grep -v 'master'| tr -d '\n'`
+promote = !~/bin/git-promote
+rank-contributers = !~/bin/git-rank-contributers
+undo = reset --soft HEAD^
+wtf = !~/bin/git-wtf
+browse = !hub browse
+w = !hub browse
+compare = !hub compare
+cia = !git add -A && git commit -av
+s = status -s
+p = !"git pull; git submodule foreach git pull origin master"
+remotes = remote -v
+ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+le = log --oneline --decorate
+filelog = log -u
+fl = log -u
+dl = "!git ll -1"
+dlc = diff --cached HEAD^
+dr  = "!f() { git diff "$1"^.."$1"; }; f"
+lc  = "!f() { git ll "$1"^.."$1"; }; f"
+diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+f = "!git ls-files | grep -i"
+grep = grep -Ii
+gr = grep -Ii
+gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
+la = "!git config -l | grep alias | cut -c 7-"
+done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+assume = update-index --assume-unchanged
+unassume = update-index --no-assume-unchanged
+assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+lasttag = describe --tags --abbrev=0
+lt = describe --tags --abbrev=0
+ours = "!f() { git co --ours $@ && git add $@; }; f"
+theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+diff = diff --word-diff
+dc = diff --cached
+r = reset
+r1 = reset HEAD^
+r2 = reset HEAD^^
+rh = reset --hard
+rh1 = reset HEAD^ --hard
+rh2 = reset HEAD^^ --hard
+svnr = svn rebase
+svnd = svn dcommit
+svnl = svn log --oneline --show-commit
+sl = stash list
+sa = stash apply
+ss = stash save
+
+# Operating System dependent settings
+{{ if eq .chezmoi.os "darwin" }}
+[core]
+trustctime = false
+[difftool "Kaleidoscope"]
+cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+trustExitCode = true
+[merge]
+tool = Kaleidoscope
+[credential]
+helper = osxkeychain
+{{ end }}
+{{ if eq .chezmoi.os "linux" }}
+[credential]
+helper = store
+{{ end }}

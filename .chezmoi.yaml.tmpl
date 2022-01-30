@@ -1,0 +1,96 @@
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $ephemeral := false -}}{{/* true if this machine is ephemeral, e.g. a cloud or VM instance */}}
+{{- $work := false -}}{{/* true if this machine should have work secrets */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets */}}
+{{- "" -}}
+
+{{ if eq .chezmoi.os "linux" }}
+{{/* detect GitHub codespaces, VSCode remote containers, Docker containers, Multipass VMs, and Vagrant boxes */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") (eq .chezmoi.username "ubuntu" "vagrant" "vscode") (output "cat" "/proc/1/cgroup" | contains "docker") -}}
+{{-   $headless = true -}}
+{{-   $ephemeral = true -}}
+{{- end -}}
+{{ end }}
+
+
+{{- $install_more_packages := "false" -}}
+{{- if (hasKey .packages "install_more_packages") -}}
+{{-   $install_more_packages = .packages.install_more_packages -}}
+{{- else -}}
+{{-   $install_more_packages = promptBool "Install more packages" -}}
+{{- end -}}
+
+{{- $config_python_format_tools := "false" -}}
+{{- if (hasKey .packages "config_python_format_tools") -}}
+{{-   $config_python_format_tools = .packages.config_python_format_tools -}}
+{{- else -}}
+{{-   $config_python_format_tools = promptBool "Config python formatting tools" -}}
+{{- end -}}
+
+
+{{/* work around unreliable hostname on darwin */}}
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $computerName := output "scutil" "--get" "ComputerName" | trim -}}
+{{-   if eq $computerName "greybook" -}}
+{{-     $hostname = "greybook" -}}
+{{-   else -}}
+{{-     $hostname = $computerName -}}
+{{-   end -}}
+{{- end -}}
+
+{{- if not $ephemeral -}}
+{{-   if eq $hostname "blofeld.nc.w9r.de" -}}
+{{-     $headless = true -}}
+{{-     $work = true -}}
+{{-   else if eq $hostname "greybook" -}}
+{{-     $personal = true -}}
+{{-     $work = true -}}
+{{-   else if eq $hostname "goldfinger.do.w9r.de" -}}
+{{-     $headless = true -}}
+{{-     $work = true -}}
+{{-   else if stdinIsATTY -}}
+{{-     if hasKey . "headless" -}}
+{{-       $headless = .headless -}}
+{{-     else -}}
+{{-       $headless = promptBool "headless" -}}
+{{-     end -}}
+{{-     if hasKey . "ephemeral" -}}
+{{-       $ephemeral = .ephemeral -}}
+{{-     else -}}
+{{-       $ephemeral = promptBool "ephemeral" -}}
+{{-     end -}}
+{{-   else -}}
+{{-     $headless = true -}}
+{{-     $ephemeral = true -}}
+{{-   end -}}
+{{- end -}}
+
+data:
+  headless: {{ $headless }}
+  hostname: {{ $hostname }}
+  ephemeral: {{ $ephemeral }}
+  personal: {{ $personal }}
+  work: {{ $work }}
+  op_server: my.1password.com
+  op_account: oliver@weyhmueller.de
+  packages:
+    config_python_format_tools: {{ $config_python_format_tools }}
+    install_more_packages: {{ $install_more_packages }}
+{{- if $personal }}
+  personal_vault: apbf24n32olg6xpk7mwoaevghq
+{{- end }}
+{{- if $work }}
+  work_vault: cihqioiemrmjckioptz6l3mu3q
+{{- end }}
+color: true
+encryption: age
+format: yaml
+verbose: true
+age:
+  identity: ~/.age/key.txt
+  recipient: age1uzqxem4cweevwncmvyyq2lr7wgjfc70xzyevca0t0rtfcdw5xytsrr38f6
+git:
+  autoAdd: true
+  autoCommit: false
+  autoPush: false

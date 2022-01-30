@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+echo -n 'IPv4: '
+curl -4 https://ip.w9r.de/getip.php
+echo
+echo -n 'IPv6: '
+curl -6 https://ip.w9r.de/getip.php
+echo

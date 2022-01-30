@@ -1,0 +1,311 @@
+#!perl -T
+
+use strict;
+use warnings;
+use bignum;
+
+use Getopt::Long;
+use Pod::Usage;
+
+my %opt;
+GetOptions(
+  \%opt,
+
+  # functions
+  'N|n|count',
+  'max',
+  'mean|avg|m',
+  'median',
+  'min',
+  'mode',
+  'percentile=i',
+  'quartile=i',
+  'sd|stdev',
+  'sum|s',
+  'variance|var',
+
+  # predefined sets
+  'summary|five',
+  'complete|all',
+  'default|basic',
+
+  # output control
+  'delimiter|d=s',
+  'format|fmt|f=s',
+  'no-header|nh',
+  'transverse-output|to',
+  'quiet|q',
+
+  'help|h',
+) or pod2usage(1);
+
+
+my %predefined = (
+  complete => [ qw/N min q1 median q3 max sum mean sd var percentile quartile mode/ ],
+  summary  => [ qw/min q1 median q3 max/ ],
+  default  => [ qw/N min max sum mean sd/ ],
+);
+
+pod2usage(1) if $opt{help};
+
+my ($min,$max);
+my ($n, $sum, $sum_square, $mean) = (0, 0, 0, 0);
+my (%count, $most_common);
+
+# some functions require the full dataset
+my @data;
+my $keep_data = (
+       defined $opt{median}
+    || defined $opt{percentile}
+    || defined $opt{quartile}
+    || defined $opt{summary}
+    || defined $opt{complete}
+);
+
+# some functions require frequencies
+my $keep_frequencies = (
+      defined $opt{mode}
+);
+
+my $M2 = 0;
+
+# read data
+while (my $num = <>) {
+  chomp $num;
+
+  if ($num !~ m{^
+    [+-]?
+    (?: \. ? [0-9]+
+      | [0-9]+ \. [0-9]*
+      | \. ? [0-9]+ E [+-]? [0-9]+
+      | [0-9]* \. [0-9]+ E [+-]? [0-9]+
+    )
+  $}x) {
+      warn "Invalid number '$num'\n" unless $opt{quiet};
+      next;
+  }
+
+  $n++;
+
+  my $delta = $num - $mean;
+
+  $mean += $delta / $n;
+  $M2   += $delta * ($num - $mean);
+
+  if ($keep_data) {
+    push @data, $num;
+  }
+
+  if ($keep_frequencies) {
+    $count{$num}++;
+    $most_common = $count{$num} if (!defined $most_common or $count{$num} > $most_common);
+  }
+
+  $min = $num if (!defined $min or $num < $min);
+  $max = $num if (!defined $max or $num > $max);
+
+  $sum += $num;
+}
+
+# silently exit if $n == 0
+exit if (!$n);
+
+my ( %summary, $percentile, $quartile, $median );
+if ( $opt{summary} or $opt{complete} ) {
+  my ($q1, $q2, $q3) = percentiles(\@data, 25, 50, 75);
+  %summary = (
+    min    => $min,
+    q1     => $q1,
+    median => $q2,
+    q3     => $q3,
+    max    => $max,
+  );
+} elsif (defined $opt{percentile}) {
+  ($percentile) = percentiles( \@data, $opt{percentile} );
+} elsif (defined $opt{quartile}) {
+  die "Invalid quartile\n" if $opt{quartile} < 0 or $opt{quartile} > 4;
+  ($quartile)   = percentiles( \@data, $opt{quartile} * 25 );
+} elsif (defined $opt{median}) {
+  ($median)     = percentiles( \@data, 50 );
+}
+
+my $variance = $n > 1 ? $M2 / ($n - 1)             : undef;
+my $sd       = defined $variance ? sqrt($variance) : undef;
+
+my @mode = grep { $count{$_} == $most_common } keys %count;
+
+my $mode = scalar @mode == 1 ? $mode[0] : undef; # don't deal with multimodes
+
+my %st = (
+  N          => $n,
+  max        => $max,
+  mean       => $mean,
+  median     => $median,
+  min        => $min,
+  mode       => $mode,
+  percentile => $percentile,
+  quartile   => $quartile,
+  sd         => $sd,
+  sum        => $sum,
+  variance   => $variance,
+  %summary,
+);
+
+my $delimiter  = delete $opt{'delimiter'}   || "\t";
+my $format     = delete $opt{'format'}      || '%.2f';
+my $no_header  = delete $opt{'no-header'};
+my $transverse = delete $opt{'transverse-output'};
+my $quiet      = delete $opt{'quiet'};
+
+if ($delimiter =~ /^\\[a-z]$/) {
+  $delimiter = $delimiter eq '\t' ? "\t"
+             : $delimiter eq '\n' ? "\n"
+                                  : die "Invalid delimiter: '$delimiter'\n";
+}
+
+if ($format =~ m{( \%[0-9]*\.?[0-9]* [deEfgGi] )}x) {
+  $format = $1;
+} else {
+  die "Invalid format: '$format'\n";
+}
+
+my @opt = !%opt || $opt{default}  ? @{ $predefined{default}  }
+        :          $opt{complete} ? @{ $predefined{complete} }
+        :          $opt{summary}  ? @{ $predefined{summary}  }
+                                  : grep { defined $opt{$_} } @{ $predefined{complete} };
+
+@opt = grep { defined $st{$_} } @opt;
+
+if (scalar @opt == 1) {
+  print "$st{$opt[0]}\n";
+  exit;
+}
+
+if ($transverse) {
+  for my $opt (@opt) {
+    print "$opt$delimiter" unless $no_header;
+    print sprintf( $format, $st{$opt} ), "\n";
+  }
+} else {
+  print join($delimiter, @opt), "\n" unless $no_header;
+  print join($delimiter, map { sprintf ($format, $st{$_}) } @opt), "\n";
+}
+
+exit;
+
+###
+
+sub percentiles {
+  my ($data, @p) = @_;
+
+  my @data = sort { $a <=> $b } @{$data};
+
+  my @percentiles = ();
+  for my $p (@p) {
+
+    if ($p < 0 or $p > 100) {
+      die "Invalid percentile ($p)\n";
+    }
+
+    my $index = $p * $#data / 100;
+
+    my $percentile = $index == int($index) ? $data[$index]
+                                           : ($data[$index] + $data[$index+1]) / 2;
+  
+    push @percentiles, $percentile;
+  }
+
+  return @percentiles;
+}
+
+__END__
+
+=head1 NAME
+
+st - statistics from the command line interface (CLI)
+
+=head1 DESCRIPTION
+
+"st" is a command-line tool to calculate statistics from a file or
+standard input.
+
+=head1 USAGE
+
+  st <input_file>
+
+  st [options] <input_file>
+
+=head2 OPTIONS
+
+If no options are used, C<st> will print:
+
+  n min max sum mean sd
+
+The following options are available:
+
+=head2 OUTPUT
+
+  --N|n|count
+  --max
+  --mean|avg|m
+  --median
+  --min
+  --mode
+  --sd|stdev
+  --sum|s
+  --variance|var
+
+  --percentile=<0..100>
+  --quartile=<1..3>
+
+  --summary   # five-number summary: min q1 median q3 max
+  --complete  # everything
+
+=head2 FORMAT
+
+  --delimiter|d=<value>   # default: "\t"
+  --format|fmt|f=<value>  # default: "%.2f"
+
+  --no-header|nh          # don't display header
+  --transverse-output|to  # output in multiple lines
+  --quiet|q               # silently skip invalid input
+
+=head2 EXAMPLES
+
+  st
+
+  st --summary
+
+  st --complete
+
+  st --complete --transverse-output
+
+  st --no-header --delimiter='\n' --format='%.1e'
+
+=head1 AUTHOR
+
+Nelson Ferraz L<<nferraz@gmail.com>>
+
+=head1 CONTRIBUTORS
+
+imurray, who suggested a different algorithm for calculating variance.
+
+asgeirn, who suggested a input filter and helped to remove some
+warnings.
+
+gabeguz, who modified the script to make it more portable.
+
+Send comments, suggestions and bug reports to:
+
+https://github.com/nferraz/st/issues
+
+Or fork the code on github:
+
+https://github.com/nferraz/st
+
+=head1 COPYRIGHT
+
+Copyright (c) 2013 Nelson Ferraz.
+
+This program is free software; you can redistribute it and/or modify
+it under the MIT License (see LICENSE).

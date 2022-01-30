@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+keyid=YOUR_KEY_ID_GOES_HERE
+gpgconf --kill gpg-agent
+cd "$(gpgconf --list-dirs homedir)/private-keys-v1.d"
+gpg -K --with-keygrip --with-colons "$keyid" | \
+awk -F: '/^grp/ { print $10".key"; }' | \
+xargs rm -vf
+
+gpg-connect-agent "scd serialno" "learn --force" /bye

@@ -1,0 +1,83 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+packages=(
+    curl
+    git
+    gnupg
+    zsh
+)
+pip_packages=()
+
+{{ if .packages.config_python_format_tools }}
+packages+=(python3-pip)
+pip_packages+=(
+    black
+    flake8
+    isort
+)
+{{ end }}
+
+{{ if .packages.install_more_packages }}
+packages+=(
+    axel
+    bat
+    exa
+    htop
+    httpie
+    iproute2
+    neofetch
+    neovim
+    ripgrep
+    tig
+    tmux
+    trash-cli
+    vim
+    wget
+    xclip
+    yt-dlp
+    zoxide
+)
+
+pip_packages+=(
+    thefuck
+    tldr
+    pynvim
+)
+{{ end }}
+
+get_package_manager() {
+    if grep -Eqi "debian|raspbian" /proc/version; then
+        PKG="apt"
+        INSTALL_PARAM='install -y'
+    elif grep -Eqi "archlinux" /proc/version; then
+        PKG="pacman"
+        INSTALL_PARAM="-Sy --noconfirm"
+    fi
+}
+
+get_current_user() {
+    if [ `whoami` == "root" ]; then
+        USER="root"
+    else
+        USER=`whoami`
+    fi
+}
+
+get_package_manager
+get_current_user
+[ $USER == "root" ] && {
+    $PKG $INSTALL_PARAM ${packages[@]}
+} || {
+    sudo $PKG $INSTALL_PARAM ${packages[@]}
+}
+
+{{ if lookPath "pip3" }}
+if (( ${#pip_packages[@]} > 0 )); then
+    pip3 install ${pip_packages[@]}
+fi
+{{ end }}
+
+{{ end -}}

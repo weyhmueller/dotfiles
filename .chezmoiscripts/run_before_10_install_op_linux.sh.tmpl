@@ -1,0 +1,45 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/bin/bash
+
+set -e
+
+VERSION="1.12.4"
+
+if command -v op >/dev/null 2>&1; then
+  if [ "$(op --version)" = "$VERSION" ]; then
+    exit
+  fi
+fi
+
+tmpdir="$(mktemp -d)"
+cd "$tmpdir"
+
+if uname | grep -q Linux; then
+  case "$(uname -m)" in
+    *arm*) fname="op_linux_arm_v${VERSION}.zip" ;;
+    *) fname="op_linux_amd64_v${VERSION}.zip" ;;
+  esac
+
+curl --fail --silent --show-error --location \
+  "https://cache.agilebits.com/dist/1P/op/pkg/v${VERSION}/${fname}" \
+  -o "$fname"
+
+  unzip "$fname"
+
+  gpg \
+    --keyserver hkp://keyserver.ubuntu.com \
+    --recv-keys 3FEF9748469ADBE15DA7CA80AC2D62742012EA22
+  gpg --verify op.sig op
+
+  sudo mv op /usr/local/bin
+fi
+
+op --version
+if op signin -l | grep -q '1. my'; then
+  # account already registered
+  eval $(op signin)
+else
+  eval $(op signin {{ .op_server }} {{ .op_account }})
+fi
+
+{{ end -}}
