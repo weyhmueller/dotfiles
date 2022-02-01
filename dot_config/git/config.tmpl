@@ -8,7 +8,7 @@ excludesfile = ~/.config/git/ignore
 autocrlf = input
 attributesfile = ~/config/git/attributes
 whitespace = space-before-tab,tab-in-indent,trailing-space,tabwidth=2
-pager =
+pager = delta
 mergeoptions = --no-edit
 commitGraph = true
 
@@ -19,12 +19,14 @@ program = smimesign
 
 [diff]
 algorithm = histogram
+colorMoved = default
 renames = copies
 [difftool]
 prompt = false
 
 [merge]
 log = true
+conflictstyle = diff3
 [mergetool]
 prompt = false
 keepBackup = false
@@ -52,6 +54,27 @@ pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
 whitespace = fix
 [help]
 autocorrect = 20
+[interactive]
+diffFilter = delta --color-only
+
+[delta]
+navigate = true
+features = line-numbers decorations
+syntax-theme = Dracula
+plus-style = syntax "#003800"
+minus-style = syntax "#3f0001"
+
+[delta "decorations"]
+commit-decoration-style = bold yellow box ul
+file-style = bold yellow ul
+file-decoration-style = none
+chunk-header-decoration-style = cyan box ul
+
+[delta "line-numbers"]
+line-numbers-left-style = cyan
+line-numbers-right-style = cyan
+line-numbers-minus-style = 124
+line-numbers-plus-style = 28
 
 [filter "lfs"]
 clean = git-lfs clean -- %f

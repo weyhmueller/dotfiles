@@ -60,7 +60,7 @@ VisualHostKey yes
 
 IdentitiesOnly yes
 
-Include ~/./ssh/cred_config
+Include ~/.ssh/cred_config
 
 Host *
   AddKeysToAgent 60m
