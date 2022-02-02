@@ -56,6 +56,16 @@ z4h install ohmyzsh/ohmyzsh || return
 z4h source $Z4H/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
 export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
 
+if [ $TERM = "tmux-256color" ] && [ -z "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  eval $(op signin my)
+elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  op get account > /dev/null
+  RESULT=$?
+  if [ $RESULT -gt 0 ]; then
+    eval $(op signin my)
+  fi
+fi
+
 #unset SSH_AUTH_SOCK
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities id_ed25519 id_ed25519_sk_5c1 id_ed25519_sk_5cnfc1 id_ed25519_sk_5cnfc2
@@ -87,43 +97,45 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/lib/clipboard.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/functions.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/grep.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ansible/ansible.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/aws/aws.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/brew/brew.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/common-aliases/common-aliases.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/colorize/colorize.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer/copybuffer.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copydir/copydir.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/cp/cp.plugin.zsh
-# z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/debian/debian.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/direnv/direnv.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/docker/docker.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/doctl/doctl.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/encode64/encode64.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/extract/extract.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/gem/gem.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git/git.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git-extras/git-extras.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/git-lfs/git-lfs.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/helm/helm.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/httpie/httpie.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jsontools/jsontools.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/jump/jump.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/kubectl/kubectl.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/mosh/mosh.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/nmap/nmap.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/macos/macos.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/perms/perms.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/profiles/profiles.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/rvm/rvm.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar/singlechar.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/sudo/sudo.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin/systemadmin.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/tmux/tmux.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/vscode/vscode.plugin.zsh
-z4h source $Z4H/ohmyzsh/ohmyzsh/plugins/web-search/web-search.plugin.zsh
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ansible
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/aws
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/brew
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/common-aliases
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/colorize
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copydir
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/cp
+# z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/debian
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/direnv
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/docker
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/doctl
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/encode64
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/extract
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/gem
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git-extras
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git-lfs
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/helm
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/httpie
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/jsontools
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/jump
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/kubectl
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mosh
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/nmap
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/macos
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/perms
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/profiles
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/rvm
+if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+  z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
+fi
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/sudo
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/tmux
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/vscode
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/web-search
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
@@ -169,11 +181,6 @@ alias ls="${aliases[ls]:-ls} -g"
 export EYRC=./.eyrc
 
 source "$HOME/.zshsyntax"
-
-#ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
-#ZSH_HIGHLIGHT_STYLES[path]='fg=7'
-#ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=magenta'
-#ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=magenta'
 
 if [ -e "$HOME/.rvm/scripts/rvm" ]; then
   source "$HOME/.rvm/scripts/rvm"
