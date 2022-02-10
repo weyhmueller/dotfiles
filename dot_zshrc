@@ -180,6 +180,12 @@ alias ls="${aliases[ls]:-ls} -g"
 # look for ey config in project dirs
 export EYRC=./.eyrc
 
+myPager=""
+for p in bat "$PAGER" less more cat; do
+    myPager=$(which "$p") && break
+done
+export PAGER=$myPager
+
 source "$HOME/.zshsyntax"
 
 if [ -e "$HOME/.rvm/scripts/rvm" ]; then
