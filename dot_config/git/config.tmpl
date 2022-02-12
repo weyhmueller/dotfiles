@@ -1,7 +1,7 @@
 [user]
 name = Oliver Weyhmueller
-email = {{ (onepasswordDetailsFields "5o2mjxzzjyullqhdjxjgua2jie" .work_vault).username.value }}
-signingkey = 2ECE9419860C7C3CD1C65D2A5286794099F934A3
+email = {{ (onepasswordDetailsFields "5o2mjxzzjyullqhdjxjgua2jie" .chezmoi_vault).username.value }}
+signingkey = {{ (onepasswordDetailsFields "5o2mjxzzjyullqhdjxjgua2jie" .chezmoi_vault).password.value }}
 
 [core]
 excludesfile = ~/.config/git/ignore
@@ -34,8 +34,6 @@ keepTemporaries = false
 
 [init]
 defaultBranch = main
-[commit]
-gpgsign = true
 [fetch]
 prune = true
 [pull]
@@ -93,10 +91,7 @@ all = add -A
 amend = commit --amend -C HEAD
 credit = commit --amend --author "$1 <$2>" -C HEAD
 delete-local-merged = branch -d `git branch --merged | grep -v '^*' | grep -v 'master'| tr -d '\n'`
-promote = !~/bin/git-promote
-rank-contributers = !~/bin/git-rank-contributers
 undo = reset --soft HEAD^
-wtf = !~/bin/git-wtf
 browse = !hub browse
 w = !hub browse
 compare = !hub compare
@@ -151,6 +146,8 @@ ss = stash save
 {{ if eq .chezmoi.os "darwin" }}
 [core]
 trustctime = false
+[commit]
+gpgsign = true
 [difftool "Kaleidoscope"]
 cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [diff]
@@ -164,6 +161,8 @@ tool = Kaleidoscope
 helper = osxkeychain
 {{ end }}
 {{ if eq .chezmoi.os "linux" }}
+[commit]
+gpgsign = false
 [credential]
 helper = store
 {{ end }}

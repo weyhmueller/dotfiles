@@ -97,36 +97,41 @@ z4h source $Z4H/ohmyzsh/ohmyzsh/lib/clipboard.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/functions.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/directories.zsh
 z4h source $Z4H/ohmyzsh/ohmyzsh/lib/grep.zsh
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ansible
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/aws
+{{ if eq .chezmoi.os "darwin" }}
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/brew
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/doctl
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/macos
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mvn
+{{ end }}
+{{ if eq .chezmoi.os "linux" }}
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/debian
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemd
+unalias age
+{{ end }}
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/aliases
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ansible
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/common-aliases
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/colorize
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copydir
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/cp
-# z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/debian
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/direnv
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/docker
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/doctl
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/docker-compose
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/encode64
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/extract
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/gem
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/gh
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git-extras
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/git-lfs
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/helm
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/httpie
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/gitignore
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/jsontools
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/jump
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/kubectl
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mosh
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/nmap
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/macos
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/perms
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/profiles
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/rvm
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ripgrep
 if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
 fi
@@ -135,7 +140,6 @@ z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/sudo
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/tmux
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/vscode
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/web-search
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
