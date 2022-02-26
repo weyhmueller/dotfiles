@@ -53,8 +53,6 @@ zstyle ':zle:down-line-or-beginning-search' leave-cursor 'yes'
 # example. If you don't plan to use Oh My Zsh, delete this line.
 z4h install ohmyzsh/ohmyzsh || return
 
-z4h source $Z4H/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh
-export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
 
 if [ $TERM = "tmux-256color" ] && [ -z "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   eval $(op signin my)
@@ -81,6 +79,9 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Extend PATH.
 path=(~/bin /usr/local/opt/python@3.9/bin /opt/homebrew/opt/curl/bin /opt/homebrew/bin $path)
+
+z4h load $Z4H/ohmyzsh/plugins/gpg-agent
+export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
 
 # Export environment variables.
 export GPG_TTY=$TTY
