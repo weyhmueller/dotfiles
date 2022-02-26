@@ -42,10 +42,47 @@ rebase = true
 default = upstream
 [rebase]
 autoStash = true
+
 [color]
-branch = auto
-diff = auto
-status = auto
+  ui = auto
+[color "branch"]
+  current = cyan bold reverse
+  local = white
+  plain =
+  remote = cyan
+[color "diff"]
+  commit =
+  func = cyan
+  plain =
+  whitespace = magenta reverse
+  meta = white
+  frag = cyan bold reverse
+  old = red
+  new = green
+[color "grep"]
+  context =
+  filename =
+  function =
+  linenumber = white
+  match =
+  selected =
+  separator =
+[color "interactive"]
+  error =
+  header =
+  help =
+  prompt =
+[color "status"]
+  added = green
+  changed = white
+  header =
+  localBranch =
+  nobranch =
+  remoteBranch = cyan bold
+  unmerged = magenta bold reverse
+  untracked = red
+  updated = green bold
+
 [format]
 pretty = %Cblue%h%Creset %Cgreen[%ar]%Creset (%an) %s
 [apply]
@@ -150,13 +187,9 @@ trustctime = false
 gpgsign = true
 [difftool "Kaleidoscope"]
 cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[diff]
-tool = Kaleidoscope
 [mergetool "Kaleidoscope"]
 cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 trustExitCode = true
-[merge]
-tool = Kaleidoscope
 [credential]
 helper = osxkeychain
 {{ end }}

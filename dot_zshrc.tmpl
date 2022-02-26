@@ -8,7 +8,7 @@
 # You can manually run `z4h update` to update everything.
 zstyle ':z4h:' auto-update      'yes'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
-zstyle ':z4h:' auto-update-days '28'
+zstyle ':z4h:' auto-update-days '7'
 
 # Move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'yes'
@@ -66,7 +66,6 @@ elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   fi
 fi
 
-#unset SSH_AUTH_SOCK
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 zstyle :omz:plugins:ssh-agent identities id_ed25519 id_ed25519_sk_5c1 id_ed25519_sk_5cnfc1 id_ed25519_sk_5cnfc2
 
@@ -104,6 +103,7 @@ z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/macos
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mvn
 {{ end }}
 {{ if eq .chezmoi.os "linux" }}
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/debian
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemd
 unalias age
@@ -132,12 +132,10 @@ z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mosh
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/nmap
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/perms
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ripgrep
-if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
-  z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
-fi
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/singlechar
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/sudo
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemadmin
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/terraform
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/tmux
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/vscode
 
@@ -183,6 +181,14 @@ alias ls="${aliases[ls]:-ls} -g"
 
 # look for ey config in project dirs
 export EYRC=./.eyrc
+
+{{ if eq .chezmoi.os "darwin" }}
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+eval $(gdircolors -b ~/.dircolors)
+{{ end }}{{ if eq .chezmoi.os "linux" }}
+eval $(dircolors -b ~/.dircolors)
+{{ end }}
+export LS_COLORS=$LS_COLORS
 
 myPager=""
 for p in bat "$PAGER" less more cat; do
