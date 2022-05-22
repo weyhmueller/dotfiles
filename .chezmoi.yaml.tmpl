@@ -39,11 +39,13 @@
 {{- end -}}
 
 {{- if not $ephemeral -}}
-{{-   if eq $hostname "blofeld.nc.w9r.de" -}}
+{{-   if eq $hostname "blofeld" -}}
 {{-     $headless = true -}}
 {{-   else if eq $hostname "greybook" -}}
 {{-     $personal = true -}}
-{{-   else if eq $hostname "mail" -}}
+{{-   else if eq $hostname "goldfinger" -}}
+{{-     $headless = true -}}
+{{-   else if eq $hostname "scaramanga" -}}
 {{-     $headless = true -}}
 {{-   else if stdinIsATTY -}}
 {{-     if hasKey . "headless" -}}
