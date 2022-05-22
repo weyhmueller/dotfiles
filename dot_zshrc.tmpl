@@ -64,8 +64,7 @@ elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   fi
 fi
 
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities id_ed25519 id_ed25519_sk_5c1 id_ed25519_sk_5cnfc1 id_ed25519_sk_5cnfc2
+zstyle :omz:plugins:ssh-agent agent-forwarding off
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh

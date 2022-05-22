@@ -1,4 +1,8 @@
-{{ range (gitHubKeys "weyhmueller") -}}
-{{   .Key }}
-{{ end -}}
+{{- if contains "nc.w9r.de" .chezmoi.hostname }}
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOp00pHo/r019ONrHpPd4mwQ1Uq+ccLQodyPjUQuUZWa
+{{- else if contains "do.w9r.de" .chezmoi.hostname }}
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGgVCIsHfiBjYbFDyotlmT4PNHjwln1TK7+8EPmZKiO1
+{{- else }}
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILH2FApnLnyzGQSju+guYwO2jp+rS68lhFszaI84lKBF
+{{- end }}
 command="/usr/bin/check_mk_agent" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgOgaCRLxAsxPkMK4lgQKSzyHZYKvAL0Yq6UHDCYaXw cmk@checkmk
