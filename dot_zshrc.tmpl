@@ -64,7 +64,7 @@ elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
   fi
 fi
 
-zstyle :omz:plugins:ssh-agent agent-forwarding off
+#zstyle :omz:plugins:ssh-agent agent-forwarding off
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -103,7 +103,7 @@ z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/macos
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/mvn
 {{ end }}
 {{ if eq .chezmoi.os "linux" }}
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
+#z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ssh-agent
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/debian
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/systemd
 unalias age
@@ -112,7 +112,7 @@ z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/aliases
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/ansible
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/common-aliases
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copybuffer
-z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copydir
+z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copypath
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/copyfile
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/cp
 z4h load $Z4H/ohmyzsh/ohmyzsh/plugins/direnv
