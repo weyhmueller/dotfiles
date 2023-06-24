@@ -59,8 +59,14 @@ VisualHostKey yes
 #SendEnv LANG LC_*
 
 IdentitiesOnly yes
+AddressFamily inet
 
+KexAlgorithms -sntrup761x25519-sha512@openssh.com
 Include ~/.ssh/cred_config
 
 Host *
   AddKeysToAgent 60m
+{{ if eq .chezmoi.os "darwin" }}
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{ end }}

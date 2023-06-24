@@ -54,15 +54,15 @@ zstyle ':zle:down-line-or-beginning-search' leave-cursor 'yes'
 z4h install ohmyzsh/ohmyzsh || return
 
 
-if [ $TERM = "tmux-256color" ] && [ -z "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
-  eval $(op signin my)
-elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
-  op get account > /dev/null
-  RESULT=$?
-  if [ $RESULT -gt 0 ]; then
-    eval $(op signin my)
-  fi
-fi
+#if [ $TERM = "tmux-256color" ] && [ -z "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+#  eval $(op signin my)
+#elif [ -n "$OP_SESSION_my" ] && [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
+#  op get account > /dev/null
+#  RESULT=$?
+#  if [ $RESULT -gt 0 ]; then
+#    eval $(op signin my)
+#  fi
+#fi
 
 #zstyle :omz:plugins:ssh-agent agent-forwarding off
 
@@ -77,7 +77,7 @@ export ZSH_CUSTOM=~/.credentials
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 # Extend PATH.
-path=(~/bin /usr/local/opt/python@3.9/bin /opt/homebrew/opt/curl/bin /opt/homebrew/bin $path)
+path=(~/bin /opt/homebrew/opt/curl/bin /opt/homebrew/bin $path)
 
 z4h load $Z4H/ohmyzsh/plugins/gpg-agent
 export GPG_AGENT_INFO="~/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
