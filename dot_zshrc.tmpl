@@ -185,6 +185,7 @@ export EYRC=./.eyrc
 {{ if eq .chezmoi.os "darwin" }}
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 eval $(gdircolors -b ~/.dircolors)
+source ~/.config/op/plugins.sh
 {{ end }}{{ if eq .chezmoi.os "linux" }}
 eval $(dircolors -b ~/.dircolors)
 {{ end }}
@@ -206,6 +207,7 @@ fi
 export PATH="$PATH:$HOME/.rvm/bin"
 
 eval $(thefuck --alias)
+
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
